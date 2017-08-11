@@ -1,0 +1,22 @@
+<ons-toolbar>
+  <div class="left">
+    <ons-back-button></ons-back-button>
+  </div>
+  <div class="center">詳細</div>
+  <div class="right">
+    <ons-toolbar-button (click)="menu(todo)">
+      <ons-icon icon="ion-ios-more"></ons-icon>
+    </ons-toolbar-button>
+  </div>
+</ons-toolbar>
+<div class="content">
+  <ons-list-title>ID</ons-list-title>
+  <ons-list>
+    <ons-list-item>{{todo.id}}</ons-list-item>
+  </ons-list>
+  <ons-list-title>内容</ons-list-title>
+  <ons-list>
+    <ons-list-item>{{todo.content}}</ons-list-item>
+  </ons-list>
+</div>
+

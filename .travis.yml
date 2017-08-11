@@ -1,0 +1,39 @@
+sudo: false
+
+language: node_js
+
+node_js:
+  - "6"
+  - "7"
+  - node
+
+dist: trusty
+
+cache:
+  directories:
+    - node_modules
+
+addons:
+  apt:
+    sources:
+      - google-chrome
+    packages:
+      - google-chrome-stable
+
+before_install:
+  - npm install -g @angular/cli
+  - npm install -g phonegap
+  - npm install -g webpack
+
+script:
+  - npm run test
+  - npm run e2e
+  - npm run build:prod
+
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  local_dir: www
+  on:
+    branch: master

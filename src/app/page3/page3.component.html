@@ -1,0 +1,17 @@
+<ons-toolbar>
+  <div class="left">
+    <ons-toolbar-button (click)="cancel()">キャンセル</ons-toolbar-button>
+  </div>
+  <div class="right">
+    <ons-toolbar-button (click)="save(todo)">保存</ons-toolbar-button>
+  </div>
+  <div class="center">編集</div>
+</ons-toolbar>
+<div class="content">
+  <ons-list-title>内容</ons-list-title>
+  <ons-list>
+    <ons-list-item>
+      <ons-input type="text" [value]="todo.content" (input)="todo.content = $event.target.value"></ons-input>
+    </ons-list-item>
+  </ons-list>
+</div>

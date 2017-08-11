@@ -1,0 +1,13 @@
+<ons-toolbar>
+  <div class="center">Todos</div>
+  <div class="right">
+    <ons-toolbar-button (click)="add()">追加</ons-toolbar-button>
+  </div>
+</ons-toolbar>
+<div class="content">
+  <ons-list>
+    <ons-list-item tappable modifier="chevron" *ngFor="let todo of todos$ | async" (click)="detail(todo)">
+      {{todo.content}}
+    </ons-list-item>
+  </ons-list>
+</div>

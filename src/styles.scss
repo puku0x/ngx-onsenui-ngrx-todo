@@ -1,0 +1,19 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~onsenui/css/onsenui.css";
+@import "~onsenui/css/onsen-css-components.min.css";
+
+ons-list-title {
+  &.list-title {
+    padding-top: 16px;
+  }
+}
+
+ons-input {
+  width: 100%;
+}
+
+ons-bottom-toolbar {
+  .center {
+    text-align: center;
+  }
+}
