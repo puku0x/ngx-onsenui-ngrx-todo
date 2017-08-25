@@ -2,21 +2,21 @@ import { Action } from '@ngrx/store';
 import { Todo } from '../../interfaces';
 
 // アクション名
-export const FIND_ALL         = 'TODO_ACTION_FIND_ALL';
-export const FIND_ALL_SUCCESS = 'TODO_ACTION_FIND_ALL_SUCCESS';
-export const FIND_ALL_FAILED  = 'TODO_ACTION_FIND_ALL_FAILED';
-export const FIND             = 'TODO_ACTION_FIND';
-export const FIND_SUCCESS     = 'TODO_ACTION_FIND_SUCCESS';
-export const FIND_FAILED      = 'TODO_ACTION_FIND_FAILED';
-export const CREATE           = 'TODO_ACTION_CREATE';
-export const CREATE_SUCCESS   = 'TODO_ACTION_CREATE_SUCCESS';
-export const CREATE_FAILED    = 'TODO_ACTION_CREATE_FAILED';
-export const UPDATE           = 'TODO_ACTION_UPDATE';
-export const UPDATE_SUCCESS   = 'TODO_ACTION_UPDATE_SUCCESS';
-export const UPDATE_FAILED    = 'TODO_ACTION_UPDATE_FAILED';
-export const DELETE           = 'TODO_ACTION_DELETE';
-export const DELETE_SUCCESS   = 'TODO_ACTION_DELETE_SUCCESS';
-export const DELETE_FAILED    = 'TODO_ACTION_DELETE_FAILED';
+export const FIND_ALL         = '[Todo] Find All';
+export const FIND_ALL_SUCCESS = '[Todo] Find All Success';
+export const FIND_ALL_FAILED  = '[Todo] Find All Failed';
+export const FIND             = '[Todo] Find';
+export const FIND_SUCCESS     = '[Todo] Find Success';
+export const FIND_FAILED      = '[Todo] Find Failed';
+export const CREATE           = '[Todo] Create';
+export const CREATE_SUCCESS   = '[Todo] Create Success';
+export const CREATE_FAILED    = '[Todo] Create Failed';
+export const UPDATE           = '[Todo] Update';
+export const UPDATE_SUCCESS   = '[Todo] Update Success';
+export const UPDATE_FAILED    = '[Todo] Update Failed';
+export const DELETE           = '[Todo] Delete';
+export const DELETE_SUCCESS   = '[Todo] Delete Success';
+export const DELETE_FAILED    = '[Todo] Delete Failed';
 
 /**
  * 一覧取得
@@ -119,7 +119,7 @@ export class UpdateFailed implements Action {
  */
 export class Delete implements Action {
   readonly type = DELETE;
-  constructor(public payload: Todo) {}
+  constructor(public payload: number) {}
 }
 
 /**
@@ -127,7 +127,7 @@ export class Delete implements Action {
  */
 export class DeleteSuccess implements Action {
   readonly type = DELETE_SUCCESS;
-  constructor(public payload: Todo) {}
+  constructor(public payload: number) {}
 }
 
 /**

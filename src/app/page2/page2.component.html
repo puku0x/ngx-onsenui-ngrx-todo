@@ -2,11 +2,16 @@
   <div class="left">
     <ons-back-button></ons-back-button>
   </div>
-  <div class="center">詳細</div>
+  <div class="center">Detail</div>
   <div class="right">
-    <ons-toolbar-button (click)="menu(todo)">
-      <ons-icon icon="ion-ios-more"></ons-icon>
-    </ons-toolbar-button>
+    <ons-if platform="android">
+      <ons-toolbar-button (click)="menu(todo)">
+        <ons-icon icon="md-delete"></ons-icon>
+      </ons-toolbar-button>
+    </ons-if>
+    <ons-if platform="ios other">
+      <ons-toolbar-button (click)="edit(todo)">Edit</ons-toolbar-button>
+    </ons-if>
   </div>
 </ons-toolbar>
 <div class="content">
@@ -14,9 +19,30 @@
   <ons-list>
     <ons-list-item>{{todo.id}}</ons-list-item>
   </ons-list>
-  <ons-list-title>内容</ons-list-title>
+  <ons-list-title>Content</ons-list-title>
   <ons-list>
     <ons-list-item>{{todo.content}}</ons-list-item>
   </ons-list>
+  <ons-list-title>Created date</ons-list-title>
+  <ons-list>
+    <ons-list-item>{{todo.createDate | date: 'yyyy-MM-dd HH:mm:ss'}}</ons-list-item>
+  </ons-list>
+  <ons-list-title>Updated date</ons-list-title>
+  <ons-list>
+    <ons-list-item>{{todo.updateDate | date: 'yyyy-MM-dd HH:mm:ss'}}</ons-list-item>
+  </ons-list>
+  <ons-if platform="ios other">
+    <ons-list-title></ons-list-title>
+    <ons-list>
+      <ons-list-item tappable (click)="menu(todo)">
+        <div style="width: 100%; text-align: center; color: #fe3824">Delete</div>
+      </ons-list-item>
+    </ons-list>
+  </ons-if>
+  <ons-if platform="android">
+    <ons-fab (click)="edit(todo)" position="bottom right">
+      <ons-icon icon="md-edit"></ons-icon>
+    </ons-fab>
+  </ons-if>
 </div>
 

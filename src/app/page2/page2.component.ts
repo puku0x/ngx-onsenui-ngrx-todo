@@ -16,6 +16,7 @@ import { Page3Component } from '../page3/page3.component';
 })
 export class Page2Component implements OnInit, OnDestroy {
   todo: Todo;
+  loading$: Observable<boolean>;
   todo$: Observable<Todo>;
   subscription: Subscription;
 
@@ -25,25 +26,22 @@ export class Page2Component implements OnInit, OnDestroy {
     private params: Params,
   ) {
     this.todo$ = store.select(TodoReducer.getTodo);
+    this.loading$ = store.select(TodoReducer.getLoading);
   }
 
   /**
-   * 編集メニュー表示
+   * メニュー表示
    */
   menu(todo: Todo) {
     ons.openActionSheet({
       cancelable: true,
       buttons: [
-        { label: '編集' },
-        { label: '削除', modifier: 'destructive' },
-        { label: 'キャンセル' }
+        { label: 'Delete', icon: 'md-delete', modifier: 'destructive' },
+        { label: 'Cancel', icon: 'md-close' }
       ],
     }).then((i: number) => {
       switch (i) {
         case 0:
-          this.edit(todo);
-          break;
-        case 1:
           this.delete(todo);
           break;
         default:

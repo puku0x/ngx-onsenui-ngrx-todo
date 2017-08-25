@@ -1,17 +1,27 @@
 <ons-toolbar>
   <div class="left">
-    <ons-toolbar-button (click)="cancel()">キャンセル</ons-toolbar-button>
+    <ons-toolbar-button (click)="cancel()">
+      <ons-if platform="android">
+        <ons-icon icon="md-close"></ons-icon>
+      </ons-if>
+      <ons-if platform="ios other">Cancel</ons-if>
+    </ons-toolbar-button>
   </div>
   <div class="right">
-    <ons-toolbar-button (click)="save(todo)">保存</ons-toolbar-button>
+    <ons-toolbar-button (click)="save(todo)">
+      <ons-if platform="android">
+        <ons-icon icon="md-save"></ons-icon>
+      </ons-if>
+      <ons-if platform="ios other">Save</ons-if>
+    </ons-toolbar-button>
   </div>
-  <div class="center">編集</div>
+  <div class="center">Edit</div>
 </ons-toolbar>
 <div class="content">
-  <ons-list-title>内容</ons-list-title>
+  <ons-list-title>Content</ons-list-title>
   <ons-list>
     <ons-list-item>
-      <ons-input type="text" [value]="todo.content" (input)="todo.content = $event.target.value"></ons-input>
+      <input class="text-input" type="text" [(ngModel)]="todo.content">
     </ons-list-item>
   </ons-list>
 </div>

@@ -1,7 +1,9 @@
 <ons-toolbar>
   <div class="center">Todos</div>
   <div class="right">
-    <ons-toolbar-button (click)="add()">追加</ons-toolbar-button>
+    <ons-if platform="ios other">
+      <ons-toolbar-button (click)="add()">Add</ons-toolbar-button>
+    </ons-if>
   </div>
 </ons-toolbar>
 <div class="content">
@@ -10,4 +12,9 @@
       {{todo.content}}
     </ons-list-item>
   </ons-list>
+  <ons-if platform="android">
+    <ons-fab (click)="add()" position="bottom right">
+      <ons-icon icon="md-plus"></ons-icon>
+    </ons-fab>
+  </ons-if>
 </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subscription } from 'rxjs/Rx';
 import { Store } from '@ngrx/store';
 import { OnsNavigator, Params, onsNotification } from 'ngx-onsenui';
@@ -12,16 +12,23 @@ import { Todo } from '../interfaces';
   templateUrl: './page3.component.html',
   styleUrls: ['./page3.component.scss']
 })
-export class Page3Component implements OnInit {
+export class Page3Component implements OnInit, OnDestroy {
   todo: Todo;
   todo$: Observable<Todo>;
+  loading$: Observable<boolean>;
   subscription: Subscription;
+
+  @ViewChild('modal') modal;
 
   constructor(
     private store: Store<TodoReducer.State>,
     private navi: OnsNavigator,
     private params: Params,
-  ) {
+  ) { }
+
+  onValueChange(content: string) {
+    console.log(content);
+
   }
 
   /**
@@ -49,6 +56,15 @@ export class Page3Component implements OnInit {
    */
   ngOnInit() {
     this.todo = Object.assign({}, this.params.data.todo);
+    this.loading$ = this.store.select(TodoReducer.getLoading);
+
+    // this.loading$.subscribe(loading => {
+    //   this.modal.show();
+    // });
+  }
+
+  ngOnDestroy() {
+
   }
 
 }
