@@ -3,33 +3,58 @@
 [![Dev Dependency status][david-dm-dev-image]][david-dm-dev-url]
 # ngx-onsenui-ngrx-todo
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.3.2.
+|iOS|Android|
+|--|--|
+|<img src="./screenshots/iphone6s.png" height="480px"/>|<img src="./screenshots/nexus5x.png" height="480px"/>|
 
-## Development server
+A sample app using Onsen UI, Angular, ngrx and PhoneGap.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Try it here: [https://puku0x.github.io/ngx-onsenui-ngrx-todo/](https://puku0x.github.io/ngx-onsenui-ngrx-todo/).
 
-## Code scaffolding
+## How to run it
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+To run it simply do:
 
-## Build
+```bash
+npm install
+npm start
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+The app will run at [http://localhost:3000](http://localhost:3000).
 
-## Running unit tests
+## How to build it
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+You can build it using PhoneGap.
 
-## Running end-to-end tests
+- [Install Phonegap](http://docs.phonegap.com/getting-started/1-install-phonegap/cli/):
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
+```
+npm install -g phonegap
+```
 
-## Further help
+You need to build the project:
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 
+```
+npm run build
+```
+
+Add a platform to run it on a device or emulator. For Android:
+
+```
+phonegap platform add android
+phonegap run android
+```
+
+This assumes that you have the Android SDK installed.
+
+## Contributing
+
+1. Fork it ( https://github.com/puku0x/ngx-onsenui-ngrx-todo/fork )
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new Pull Request
 
 [travis-ci-url]: http://travis-ci.org/puku0x/ngx-onsenui-ngrx-todo
 [travis-ci-image]: https://travis-ci.org/puku0x/ngx-onsenui-ngrx-todo.svg?branch=master

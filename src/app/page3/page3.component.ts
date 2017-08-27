@@ -1,7 +1,6 @@
-import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
-import { Observable, Subscription } from 'rxjs/Rx';
+import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { OnsNavigator, Params, onsNotification } from 'ngx-onsenui';
+import { OnsNavigator, Params } from 'ngx-onsenui';
 
 import * as TodoAction from '../core/actions/todo.action';
 import * as TodoReducer from '../core/reducers/todo.reducer';
@@ -12,27 +11,23 @@ import { Todo } from '../interfaces';
   templateUrl: './page3.component.html',
   styleUrls: ['./page3.component.scss']
 })
-export class Page3Component implements OnInit, OnDestroy {
+export class Page3Component implements OnInit {
   todo: Todo;
-  todo$: Observable<Todo>;
-  loading$: Observable<boolean>;
-  subscription: Subscription;
 
-  @ViewChild('modal') modal;
-
+  /**
+   * Constructor
+   * @param store
+   * @param navi
+   * @param params
+   */
   constructor(
     private store: Store<TodoReducer.State>,
     private navi: OnsNavigator,
     private params: Params,
   ) { }
 
-  onValueChange(content: string) {
-    console.log(content);
-
-  }
-
   /**
-   * 保存
+   * Save a ToDo
    * @param todo
    */
   save(todo) {
@@ -45,26 +40,17 @@ export class Page3Component implements OnInit, OnDestroy {
   }
 
   /**
-   * キャンセル
+   * Cancel
    */
   cancel() {
     this.navi.nativeElement.popPage();
   }
 
   /**
-   * 初期化
+   * Initialize
    */
   ngOnInit() {
     this.todo = Object.assign({}, this.params.data.todo);
-    this.loading$ = this.store.select(TodoReducer.getLoading);
-
-    // this.loading$.subscribe(loading => {
-    //   this.modal.show();
-    // });
-  }
-
-  ngOnDestroy() {
-
   }
 
 }

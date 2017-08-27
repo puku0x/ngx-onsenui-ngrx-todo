@@ -19,12 +19,13 @@ export class TodoEffects {
    * 一覧取得
    */
   @Effect() findAll$: Observable<Action> = this.actions$
-    .ofType(TodoAction.FIND_ALL, TodoAction.CREATE_SUCCESS, TodoAction.UPDATE_SUCCESS, TodoAction.DELETE_SUCCESS)
+    .ofType(TodoAction.FIND_ALL)
     .map(toPayload)
     .switchMap(payload =>
       this.todoService
         .findAll()
         .map(data => new TodoAction.FindAllSuccess(data.content))
+        .catch(() => Observable.of(new TodoAction.FindAllFailed()))
     );
 
   /**
@@ -37,6 +38,7 @@ export class TodoEffects {
       this.todoService
         .find(payload)
         .map(data => new TodoAction.FindSuccess(data))
+        .catch(() => Observable.of(new TodoAction.FindFailed()))
     );
 
   /**
@@ -49,6 +51,17 @@ export class TodoEffects {
       this.todoService
         .create(payload)
         .map(data => new TodoAction.CreateSuccess(data))
+        .catch(() => Observable.of(new TodoAction.CreateFailed()))
+    );
+
+  /**
+   * 登録成功
+   */
+  @Effect() createSuccess$: Observable<Action> = this.actions$
+    .ofType(TodoAction.CREATE_SUCCESS)
+    .map(toPayload)
+    .switchMap(payload =>
+      Observable.of(new TodoAction.FindAll())
     );
 
   /**
@@ -61,8 +74,18 @@ export class TodoEffects {
       this.todoService
         .update(payload)
         .map(data => new TodoAction.UpdateSuccess(data))
+        .catch(() => Observable.of(new TodoAction.UpdateFailed()))
     );
 
+  /**
+   * 更新成功
+   */
+  @Effect() updateSuccess$: Observable<Action> = this.actions$
+    .ofType(TodoAction.UPDATE_SUCCESS)
+    .map(toPayload)
+    .switchMap(payload =>
+      Observable.of(new TodoAction.FindAll())
+    );
   /**
    * 削除
    */
@@ -73,6 +96,16 @@ export class TodoEffects {
       this.todoService
         .delete(payload)
         .map(() => new TodoAction.DeleteSuccess(payload))
+        .catch(() => Observable.of(new TodoAction.DeleteFailed()))
     );
 
+  /**
+   * 削除成功
+   */
+  @Effect() deleteSuccess$: Observable<Action> = this.actions$
+    .ofType(TodoAction.DELETE_SUCCESS)
+    .map(toPayload)
+    .switchMap(payload =>
+      Observable.of(new TodoAction.FindAll())
+    );
 }

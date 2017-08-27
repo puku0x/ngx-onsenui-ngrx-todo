@@ -31,7 +31,7 @@ export function reducer(state = initialState, action: TodoAction.Actions): State
 
   switch (action.type) {
     case TodoAction.FIND_ALL: {
-      return Object.assign({}, state, { loading: true});
+      return Object.assign({}, state, { loading: true });
     }
     case TodoAction.FIND_ALL_SUCCESS: {
       return Object.assign({}, state, { loading: false, todos: action.payload });
@@ -43,26 +43,24 @@ export function reducer(state = initialState, action: TodoAction.Actions): State
       return Object.assign({}, state, { loading: false, todo: action.payload });
     }
     case TodoAction.CREATE: {
-      return Object.assign({}, state, { loading: true, todos: [...state.todos, action.payload] });
+      return Object.assign({}, state, { loading: true });
     }
     case TodoAction.CREATE_SUCCESS: {
       return Object.assign({}, state, { loading: false, todos: [...state.todos, action.payload] });
     }
     case TodoAction.UPDATE: {
-      const index = state.todos.map(todo => todo.id).indexOf(action.payload.id);
-      const newTodos = [...state.todos.slice(0, index), action.payload, ...state.todos.slice(index + 1)];
-      return Object.assign({}, state, { loading: true, todos: newTodos, todo: action.payload　});
+      return Object.assign({}, state, { loading: true });
     }
     case TodoAction.UPDATE_SUCCESS: {
       const index = state.todos.map(todo => todo.id).indexOf(action.payload.id);
-      const newTodos = [...state.todos.slice(0, index), action.payload, ...state.todos.slice(index + 1)];
+      const newTodos = index < 0 ? state.todos : [...state.todos.slice(0, index), action.payload, ...state.todos.slice(index + 1)];
       return Object.assign({}, state, { loading: false, todos: newTodos, todo: action.payload　});
     }
     case TodoAction.DELETE: {
       return Object.assign({}, state, { loading: true });
     }
     case TodoAction.DELETE_SUCCESS: {
-      return Object.assign({}, state, { todos: state.todos.filter(todo => todo.id !== action.payload) });
+      return Object.assign({}, state, { loading: false, todos: state.todos.filter(todo => todo.id !== action.payload) });
     }
     default: {
       return state;

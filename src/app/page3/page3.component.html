@@ -8,7 +8,7 @@
     </ons-toolbar-button>
   </div>
   <div class="right">
-    <ons-toolbar-button (click)="save(todo)">
+    <ons-toolbar-button (click)="save(todo)" [disabled]="!f.form.valid">
       <ons-if platform="android">
         <ons-icon icon="md-save"></ons-icon>
       </ons-if>
@@ -18,10 +18,14 @@
   <div class="center">Edit</div>
 </ons-toolbar>
 <div class="content">
-  <ons-list-title>Content</ons-list-title>
-  <ons-list>
-    <ons-list-item>
-      <input class="text-input" type="text" [(ngModel)]="todo.content">
-    </ons-list-item>
-  </ons-list>
+  <form #f="ngForm" novalidate>
+    <ons-list-title>Content</ons-list-title>
+    <ons-list>
+      <ons-list-item>
+        <!-- <input class="text-input" type="text" [(ngModel)]="todo.content"> -->
+        <textarea class="textarea textarea--transparent" name="content" [(ngModel)]="todo.content" maxlength="100" required></textarea>
+        <div class="counter">{{todo.content.length}}/100</div>
+      </ons-list-item>
+    </ons-list>
+  </form>
 </div>

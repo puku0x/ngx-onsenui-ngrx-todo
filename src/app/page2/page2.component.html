@@ -5,12 +5,12 @@
   <div class="center">Detail</div>
   <div class="right">
     <ons-if platform="android">
-      <ons-toolbar-button (click)="menu(todo)">
+      <ons-toolbar-button (click)="openActionSheet(todo)" [disabled]="loading$ | async">
         <ons-icon icon="md-delete"></ons-icon>
       </ons-toolbar-button>
     </ons-if>
     <ons-if platform="ios other">
-      <ons-toolbar-button (click)="edit(todo)">Edit</ons-toolbar-button>
+      <ons-toolbar-button (click)="edit(todo)" [disabled]="loading$ | async">Edit</ons-toolbar-button>
     </ons-if>
   </div>
 </ons-toolbar>
@@ -34,7 +34,7 @@
   <ons-if platform="ios other">
     <ons-list-title></ons-list-title>
     <ons-list>
-      <ons-list-item tappable (click)="menu(todo)">
+      <ons-list-item tappable (click)="openActionSheet(todo)">
         <div style="width: 100%; text-align: center; color: #fe3824">Delete</div>
       </ons-list-item>
     </ons-list>

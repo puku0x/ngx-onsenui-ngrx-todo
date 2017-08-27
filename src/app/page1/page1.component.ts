@@ -17,6 +17,12 @@ import { Page3Component } from '../page3/page3.component';
 export class Page1Component implements OnInit {
   todos$: Observable<Todo[]>;
 
+  /**
+   * Constructor
+   * @param store
+   * @param navi
+   * @param params
+   */
   constructor(
     private store: Store<TodoReducer.State>,
     private navi: OnsNavigator,
@@ -26,7 +32,7 @@ export class Page1Component implements OnInit {
   }
 
   /**
-   * 詳細画面へ移動
+   * Go to detail page
    * @param todo
    */
   detail(todo: Todo) {
@@ -39,7 +45,7 @@ export class Page1Component implements OnInit {
   }
 
   /**
-   * 登録画面へ移動
+   * Go to edit page
    */
   add() {
     const params = {
@@ -52,7 +58,7 @@ export class Page1Component implements OnInit {
   }
 
   /**
-   * 初期化
+   * Initialize
    */
   ngOnInit() {
     this.store.dispatch(new TodoAction.FindAll());

@@ -16,10 +16,16 @@ import { Page3Component } from '../page3/page3.component';
 })
 export class Page2Component implements OnInit, OnDestroy {
   todo: Todo;
-  loading$: Observable<boolean>;
   todo$: Observable<Todo>;
+  loading$: Observable<boolean>;
   subscription: Subscription;
 
+  /**
+   * Constructor
+   * @param store
+   * @param navi
+   * @param params
+   */
   constructor(
     private store: Store<TodoReducer.State>,
     private navi: OnsNavigator,
@@ -30,11 +36,12 @@ export class Page2Component implements OnInit, OnDestroy {
   }
 
   /**
-   * メニュー表示
+   * Open action sheet
    */
-  menu(todo: Todo) {
+  openActionSheet(todo: Todo) {
     ons.openActionSheet({
       cancelable: true,
+      title: 'Do you want to delete this item ?',
       buttons: [
         { label: 'Delete', icon: 'md-delete', modifier: 'destructive' },
         { label: 'Cancel', icon: 'md-close' }
@@ -51,7 +58,7 @@ export class Page2Component implements OnInit, OnDestroy {
   }
 
   /**
-   * 編集画面へ移動
+   * Go to edit page
    * @param todo
    */
   edit(todo: Todo) {
@@ -65,7 +72,7 @@ export class Page2Component implements OnInit, OnDestroy {
   }
 
   /**
-   * 削除
+   * Delete a ToDo
    * @param todo
    */
   delete(todo: Todo) {
@@ -74,7 +81,7 @@ export class Page2Component implements OnInit, OnDestroy {
   }
 
   /**
-   * 初期化
+   * Initialize
    */
   ngOnInit() {
     this.todo = Object.assign({}, this.params.data.todo);
@@ -83,7 +90,7 @@ export class Page2Component implements OnInit, OnDestroy {
   }
 
   /**
-   * 破棄
+   * Finalize
    */
   ngOnDestroy() {
     this.subscription.unsubscribe();
