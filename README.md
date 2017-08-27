@@ -5,7 +5,7 @@
 
 |iOS|Android|
 |--|--|
-|<img src="./screenshots/iphone6s.png" height="480px"/>|<img src="./screenshots/nexus5x.png" height="480px"/>|
+|![iphone6s](./screenshots/iphone6s.png)|![nexus5x](./screenshots/nexus5x.png)|
 
 A sample app using Onsen UI, Angular, ngrx and PhoneGap.
 
