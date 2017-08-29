@@ -5,7 +5,7 @@
   <div class="center">Detail</div>
   <div class="right">
     <ons-if platform="android">
-      <ons-toolbar-button (click)="openActionSheet(todo)" [disabled]="loading$ | async">
+      <ons-toolbar-button (click)="openActionSheet(todo)">
         <ons-icon icon="md-delete"></ons-icon>
       </ons-toolbar-button>
     </ons-if>
@@ -40,7 +40,7 @@
     </ons-list>
   </ons-if>
   <ons-if platform="android">
-    <ons-fab (click)="edit(todo)" position="bottom right">
+    <ons-fab (click)="edit(todo)" position="bottom right" [disabled]="loading$ | async">
       <ons-icon icon="md-edit"></ons-icon>
     </ons-fab>
   </ons-if>
