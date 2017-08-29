@@ -12,9 +12,9 @@
       {{todo.content}}
     </ons-list-item>
   </ons-list>
-  <ons-if platform="android">
-    <ons-fab (click)="add()" position="bottom right">
-      <ons-icon icon="md-plus"></ons-icon>
-    </ons-fab>
-  </ons-if>
 </div>
+<ons-if platform="android">
+  <ons-fab (click)="add()" position="bottom right">
+    <ons-icon icon="md-plus"></ons-icon>
+  </ons-fab>
+</ons-if>
