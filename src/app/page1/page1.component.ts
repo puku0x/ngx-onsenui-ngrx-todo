@@ -15,7 +15,9 @@ import { Page3Component } from '../page3/page3.component';
   styleUrls: ['./page1.component.scss']
 })
 export class Page1Component implements OnInit {
+  message = 'Pull down to refresh';
   todos$: Observable<Todo[]>;
+
 
   /**
    * Constructor
@@ -31,6 +33,32 @@ export class Page1Component implements OnInit {
     this.todos$ = store.select(TodoReducer.getTodos);
   }
 
+  /**
+   * onAction
+   * @param
+   */
+  onAction($event) {
+    this.store.dispatch(new TodoAction.FindAll());
+    $event.done();
+  }
+
+  /**
+   * onChangeState
+   * @param
+   */
+  onChangeState($event) {
+    switch ($event.state) {
+      case 'initial':
+        this.message = 'Pull down to refresh';
+        break;
+      case 'preaction':
+        this.message = 'Release to refresh';
+        break;
+      case 'action':
+        this.message = 'Loading data...';
+        break;
+    }
+  }
   /**
    * Go to detail page
    * @param todo

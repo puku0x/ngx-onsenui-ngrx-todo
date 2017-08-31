@@ -5,14 +5,20 @@ import { HttpClientModule } from '@angular/common/http';
 import { OnsenModule } from 'ngx-onsenui';
 
 import { CoreModule } from './core/core.module';
-import { Page1Module } from './page1/page1.module';
-import { Page2Module } from './page2/page2.module';
-import { Page3Module } from './page3/page3.module';
 import { AppComponent } from './app.component';
+import { Page1Component } from './page1/page1.component';
+import { Page2Component } from './page2/page2.component';
+
+// Page components
+const pages = [ Page1Component, Page2Component ];
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ...pages
+  ],
+  entryComponents: [
+    ...pages
   ],
   imports: [
     BrowserModule,
@@ -20,9 +26,6 @@ import { AppComponent } from './app.component';
     HttpClientModule,
     OnsenModule,
     CoreModule.forRoot(),
-    Page1Module,
-    Page2Module,
-    Page3Module,
   ],
   providers: [],
   bootstrap: [AppComponent],
