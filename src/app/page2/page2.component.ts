@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Observable, Subscription } from 'rxjs/Rx';
+import { Observable, Subject } from 'rxjs/Rx';
 import { Store } from '@ngrx/store';
+import { Actions } from '@ngrx/effects';
 import { OnsNavigator, Params } from 'ngx-onsenui';
 import * as ons from 'onsenui';
 
@@ -18,7 +19,7 @@ export class Page2Component implements OnInit, OnDestroy {
   todo: Todo;
   todo$: Observable<Todo>;
   loading$: Observable<boolean>;
-  subscription: Subscription;
+  onDestroy = new Subject();
 
   /**
    * Constructor
@@ -28,6 +29,7 @@ export class Page2Component implements OnInit, OnDestroy {
    */
   constructor(
     private store: Store<TodoReducer.State>,
+    private actions$: Actions,
     private navi: OnsNavigator,
     private params: Params,
   ) {
@@ -72,12 +74,25 @@ export class Page2Component implements OnInit, OnDestroy {
   }
 
   /**
-   * Delete a ToDo
+   * Delete
    * @param todo
    */
   delete(todo: Todo) {
     this.store.dispatch(new TodoAction.Delete(todo.id));
-    this.navi.nativeElement.popPage();
+    const success = this.actions$
+      .ofType(TodoAction.DELETE_SUCCESS)
+      .do(() => {
+        this.navi.nativeElement.popPage();
+      });
+    const failed = this.actions$
+      .ofType(TodoAction.DELETE_FAILED)
+      .do(() => {
+        ons.notification.toast({
+          message: 'Failed to delete',
+          timeout: 2000
+        });
+      });
+    Observable.race(success, failed).take(1).subscribe();
   }
 
   /**
@@ -86,14 +101,16 @@ export class Page2Component implements OnInit, OnDestroy {
   ngOnInit() {
     this.todo = Object.assign({}, this.params.data.todo);
     this.store.dispatch(new TodoAction.Find(this.todo.id));
-    this.subscription = this.todo$.subscribe(todo => this.todo = todo);
+    this.todo$
+      .takeUntil(this.onDestroy)
+      .subscribe(todo => this.todo = todo);
   }
 
   /**
    * Finalize
    */
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.onDestroy.next();
   }
 
 }

@@ -8,7 +8,7 @@
     </ons-toolbar-button>
   </div>
   <div class="right">
-    <ons-toolbar-button (click)="save(todo)" [disabled]="!f.form.valid">
+    <ons-toolbar-button (click)="save(todo)" [disabled]="!f.form.valid || (loading$ | async)">
       <ons-if platform="android">
         <ons-icon icon="md-save"></ons-icon>
       </ons-if>
@@ -22,8 +22,7 @@
     <ons-list-title>Content</ons-list-title>
     <ons-list>
       <ons-list-item>
-        <!-- <input class="text-input" type="text" [(ngModel)]="todo.content"> -->
-        <textarea class="textarea textarea--transparent" name="content" [(ngModel)]="todo.content" maxlength="100" required></textarea>
+        <textarea class="textarea textarea--transparent" name="content" [(ngModel)]="todo.content"  required></textarea>
         <div class="counter">{{todo.content.length}}/100</div>
       </ons-list-item>
     </ons-list>

@@ -1,5 +1,5 @@
 /**
- * Spring Data JPA の Pageインターフェース
+ * Page interface (for Spring Data JPA)
  */
 export interface Page<T> {
   content: T[];

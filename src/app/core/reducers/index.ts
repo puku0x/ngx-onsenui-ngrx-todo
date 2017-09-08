@@ -2,14 +2,14 @@ import { ActionReducerMap } from '@ngrx/store';
 import * as fromTodo from './todo.reducer';
 
 /**
- * アプリケーション全体の状態
+ * App state
  */
 export interface State {
   todo: fromTodo.State;
 }
 
 /**
- * アプリケーション全体の状態
+ * Reducers
  */
 export const reducers: ActionReducerMap<State> = {
   todo: fromTodo.reducer,

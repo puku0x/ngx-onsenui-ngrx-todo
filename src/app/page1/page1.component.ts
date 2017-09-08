@@ -15,9 +15,8 @@ import { Page3Component } from '../page3/page3.component';
   styleUrls: ['./page1.component.scss']
 })
 export class Page1Component implements OnInit {
-  message = 'Pull down to refresh';
+  message: string;
   todos$: Observable<Todo[]>;
-
 
   /**
    * Constructor
@@ -34,16 +33,16 @@ export class Page1Component implements OnInit {
   }
 
   /**
-   * onAction
+   * Callback for 'action' event
    * @param
    */
   onAction($event) {
-    this.store.dispatch(new TodoAction.FindAll());
+    this.load();
     $event.done();
   }
 
   /**
-   * onChangeState
+   * Callback for 'changestate' event
    * @param
    */
   onChangeState($event) {
@@ -59,6 +58,14 @@ export class Page1Component implements OnInit {
         break;
     }
   }
+
+  /**
+   * Load
+   */
+  load() {
+    this.store.dispatch(new TodoAction.FindAll());
+  }
+
   /**
    * Go to detail page
    * @param todo
@@ -89,7 +96,7 @@ export class Page1Component implements OnInit {
    * Initialize
    */
   ngOnInit() {
-    this.store.dispatch(new TodoAction.FindAll());
+    this.load();
   }
 
 }

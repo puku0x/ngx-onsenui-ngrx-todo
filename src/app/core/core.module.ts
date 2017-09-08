@@ -26,7 +26,7 @@ export class CoreModule {
   }
 
   /**
-   * コンストラクタ
+   * Constructor
    * @param parentModule
    */
   constructor( @Optional() @SkipSelf() parentModule: CoreModule) {

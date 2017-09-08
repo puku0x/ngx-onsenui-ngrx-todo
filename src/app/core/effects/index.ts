@@ -1,7 +1,7 @@
 import { TodoEffects } from './todo.effect';
 
 /**
- * エフェクト
+ * Effects
  */
 export const effects = [
   TodoEffects

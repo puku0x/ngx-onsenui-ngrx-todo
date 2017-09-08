@@ -3,7 +3,7 @@ import * as TodoAction from '../actions/todo.action';
 import { Page, Todo } from '../../interfaces';
 
 /**
- * 状態
+ * State
  */
 export interface State {
   readonly loading: boolean;
@@ -12,7 +12,7 @@ export interface State {
 }
 
 /**
- * 初期状態
+ * Initial state
  */
 export const initialState = {
   loading: false,
@@ -21,7 +21,7 @@ export const initialState = {
 };
 
 /**
- * リデューサ
+ * Reducer
  * @param state
  * @param action
  */
@@ -36,17 +36,26 @@ export function reducer(state = initialState, action: TodoAction.Actions): State
     case TodoAction.FIND_ALL_SUCCESS: {
       return Object.assign({}, state, { loading: false, todos: action.payload });
     }
+    case TodoAction.FIND_ALL_FAILED: {
+      return Object.assign({}, state, { loading: false });
+    }
     case TodoAction.FIND: {
       return Object.assign({}, state, { loading: true, todo: state.todos.find(todo => todo.id === action.payload) });
     }
     case TodoAction.FIND_SUCCESS: {
       return Object.assign({}, state, { loading: false, todo: action.payload });
     }
+    case TodoAction.FIND_FAILED: {
+      return Object.assign({}, state, { loading: false });
+    }
     case TodoAction.CREATE: {
       return Object.assign({}, state, { loading: true });
     }
     case TodoAction.CREATE_SUCCESS: {
       return Object.assign({}, state, { loading: false, todos: [...state.todos, action.payload] });
+    }
+    case TodoAction.CREATE_FAILED: {
+      return Object.assign({}, state, { loading: false });
     }
     case TodoAction.UPDATE: {
       return Object.assign({}, state, { loading: true });
@@ -56,11 +65,17 @@ export function reducer(state = initialState, action: TodoAction.Actions): State
       const newTodos = index < 0 ? state.todos : [...state.todos.slice(0, index), action.payload, ...state.todos.slice(index + 1)];
       return Object.assign({}, state, { loading: false, todos: newTodos, todo: action.payload　});
     }
+    case TodoAction.UPDATE_FAILED: {
+      return Object.assign({}, state, { loading: false });
+    }
     case TodoAction.DELETE: {
       return Object.assign({}, state, { loading: true });
     }
     case TodoAction.DELETE_SUCCESS: {
       return Object.assign({}, state, { loading: false, todos: state.todos.filter(todo => todo.id !== action.payload) });
+    }
+    case TodoAction.DELETE_FAILED: {
+      return Object.assign({}, state, { loading: false });
     }
     default: {
       return state;

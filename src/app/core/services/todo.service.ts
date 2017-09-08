@@ -6,7 +6,7 @@ import { Page } from '../../interfaces/page';
 import { Todo } from '../../interfaces/todo';
 
 /**
- * サービス
+ * Service
  */
 @Injectable()
 export class TodoService {
@@ -16,7 +16,7 @@ export class TodoService {
   constructor(private http: HttpClient) { }
 
   /**
-   * 一覧取得
+   * Find all
    * @param offset
    * @param limit
    */
@@ -26,7 +26,7 @@ export class TodoService {
   }
 
   /**
-   * 一件取得
+   * Find
    * @param id
    */
   find(id: number): Observable<Todo> {
@@ -35,7 +35,7 @@ export class TodoService {
   }
 
   /**
-   * 登録
+   * Create
    * @param todo
    */
   create(todo: Todo): Observable<Todo> {
@@ -44,7 +44,7 @@ export class TodoService {
   }
 
   /**
-   * 更新
+   * Update
    * @param todo
    */
   update(todo: Todo): Observable<Todo> {
@@ -53,7 +53,7 @@ export class TodoService {
   }
 
   /**
-   * 削除
+   * Delete
    * @param todo
    */
   delete(id: number): Observable<void>  {
