@@ -14,7 +14,7 @@ import { Page3Component } from './page3/page3.component';
 /**
  * Page components
  */
-const pages = [ SpinnerComponent, Page1Component, Page2Component, Page3Component ];
+const pages = [ Page1Component, Page2Component, Page3Component ];
 
 /**
  * App module
@@ -22,6 +22,7 @@ const pages = [ SpinnerComponent, Page1Component, Page2Component, Page3Component
 @NgModule({
   declarations: [
     AppComponent,
+    SpinnerComponent,
     ...pages
   ],
   entryComponents: [
