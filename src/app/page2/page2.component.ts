@@ -25,7 +25,9 @@ export class Page2Component implements OnInit, OnDestroy {
 
   /**
    * Constructor
+   * @param spinner
    * @param store
+   * @param actions$
    * @param navi
    * @param params
    */
@@ -42,6 +44,7 @@ export class Page2Component implements OnInit, OnDestroy {
 
   /**
    * Open action sheet
+   * @param todo
    */
   openActionSheet(todo: Todo) {
     ons.openActionSheet({

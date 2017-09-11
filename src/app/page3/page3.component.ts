@@ -22,7 +22,9 @@ export class Page3Component implements OnInit {
 
   /**
    * Constructor
+   * @param spinner
    * @param store
+   * @param actions$
    * @param navi
    * @param params
    */
