@@ -5,7 +5,7 @@
   <div class="center">Detail</div>
   <div class="right">
     <ons-if platform="android">
-      <ons-toolbar-button (click)="openActionSheet(todo)">
+      <ons-toolbar-button (click)="openActionSheet(todo)" [disabled]="loading$ | async">
         <ons-icon icon="md-delete"></ons-icon>
       </ons-toolbar-button>
     </ons-if>

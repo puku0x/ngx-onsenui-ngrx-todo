@@ -5,6 +5,8 @@ import { Actions } from '@ngrx/effects';
 import { OnsNavigator, Params } from 'ngx-onsenui';
 import * as ons from 'onsenui';
 
+import * as SpinnerAction from '../core/actions/spinner.action';
+import * as SpinnerReducer from '../core/reducers/spinner.reducer';
 import * as TodoAction from '../core/actions/todo.action';
 import * as TodoReducer from '../core/reducers/todo.reducer';
 import { Todo } from '../interfaces';
@@ -28,6 +30,7 @@ export class Page2Component implements OnInit, OnDestroy {
    * @param params
    */
   constructor(
+    private spinner: Store<SpinnerReducer.State>,
     private store: Store<TodoReducer.State>,
     private actions$: Actions,
     private navi: OnsNavigator,
@@ -78,6 +81,7 @@ export class Page2Component implements OnInit, OnDestroy {
    * @param todo
    */
   delete(todo: Todo) {
+    this.spinner.dispatch(new SpinnerAction.Show());
     this.store.dispatch(new TodoAction.Delete(todo.id));
     const success = this.actions$
       .ofType(TodoAction.DELETE_SUCCESS)
@@ -92,7 +96,7 @@ export class Page2Component implements OnInit, OnDestroy {
           timeout: 2000
         });
       });
-    Observable.race(success, failed).take(1).subscribe();
+    Observable.race(success, failed).take(1).subscribe(() => this.spinner.dispatch(new SpinnerAction.Hide()));
   }
 
   /**

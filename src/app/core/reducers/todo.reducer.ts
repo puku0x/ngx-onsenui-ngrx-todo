@@ -83,7 +83,7 @@ export function reducer(state = initialState, action: TodoAction.Actions): State
   }
 }
 
-// セレクタ
+// Selector
 export const getState = createFeatureSelector<State>('todo');
 export const getLoading = createSelector(getState, (state: State) => state.loading);
 export const getTodo = createSelector(getState, (state: State) => state.todo);

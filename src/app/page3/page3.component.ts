@@ -5,6 +5,8 @@ import { Actions } from '@ngrx/effects';
 import { OnsNavigator, Params } from 'ngx-onsenui';
 import * as ons from 'onsenui';
 
+import * as SpinnerAction from '../core/actions/spinner.action';
+import * as SpinnerReducer from '../core/reducers/spinner.reducer';
 import * as TodoAction from '../core/actions/todo.action';
 import * as TodoReducer from '../core/reducers/todo.reducer';
 import { Todo } from '../interfaces';
@@ -25,6 +27,7 @@ export class Page3Component implements OnInit {
    * @param params
    */
   constructor(
+    private spinner: Store<SpinnerReducer.State>,
     private store: Store<TodoReducer.State>,
     private actions$: Actions,
     private navi: OnsNavigator,
@@ -38,6 +41,7 @@ export class Page3Component implements OnInit {
    * @param todo
    */
   create(todo: Todo) {
+    this.spinner.dispatch(new SpinnerAction.Show());
     this.store.dispatch(new TodoAction.Create(todo));
     const success = this.actions$
       .ofType(TodoAction.CREATE_SUCCESS)
@@ -52,7 +56,7 @@ export class Page3Component implements OnInit {
           timeout: 2000
         });
       });
-    Observable.race(success, failed).take(1).subscribe();
+    Observable.race(success, failed).take(1).subscribe(() => this.spinner.dispatch(new SpinnerAction.Hide()));
   }
 
   /**
@@ -60,6 +64,7 @@ export class Page3Component implements OnInit {
    * @param todo
    */
   update(todo: Todo) {
+    this.spinner.dispatch(new SpinnerAction.Show());
     this.store.dispatch(new TodoAction.Update(todo));
     const success = this.actions$
       .ofType(TodoAction.UPDATE_SUCCESS)
@@ -74,7 +79,7 @@ export class Page3Component implements OnInit {
           timeout: 2000
         });
       });
-    Observable.race(success, failed).take(1).subscribe();
+    Observable.race(success, failed).take(1).subscribe(() => this.spinner.dispatch(new SpinnerAction.Hide()));
   }
 
   /**
