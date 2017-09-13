@@ -28,9 +28,7 @@ export class Page1Component implements OnInit {
     private store: Store<TodoReducer.State>,
     private navi: OnsNavigator,
     private params: Params,
-  ) {
-    this.todos$ = store.select(TodoReducer.getTodos);
-  }
+  ) {}
 
   /**
    * Callback for 'action' event
@@ -96,6 +94,7 @@ export class Page1Component implements OnInit {
    * Initialize
    */
   ngOnInit() {
+    this.todos$ = this.store.select(TodoReducer.getTodos);
     this.load();
   }
 

@@ -21,14 +21,13 @@ export class SpinnerComponent implements OnInit, OnDestroy {
    */
   constructor(
     private store: Store<SpinnerReducer.State>
-  ) {
-    this.showing$ = store.select(SpinnerReducer.getShowing);
-  }
+  ) {}
 
   /**
    * Initialize
    */
   ngOnInit() {
+    this.showing$ = this.store.select(SpinnerReducer.getShowing);
     this.showing$
       .takeUntil(this.onDestroy)
       .subscribe(showing => {

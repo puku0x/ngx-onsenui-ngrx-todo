@@ -34,9 +34,7 @@ export class Page3Component implements OnInit {
     private actions$: Actions,
     private navi: OnsNavigator,
     private params: Params,
-  ) {
-    this.loading$ = store.select(TodoReducer.getLoading);
-  }
+  ) {}
 
   /**
    * Create
@@ -107,6 +105,7 @@ export class Page3Component implements OnInit {
    * Initialize
    */
   ngOnInit() {
+    this.loading$ = this.store.select(TodoReducer.getLoading);
     this.todo = Object.assign({}, this.params.data.todo);
   }
 

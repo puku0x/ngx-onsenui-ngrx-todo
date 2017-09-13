@@ -37,10 +37,7 @@ export class Page2Component implements OnInit, OnDestroy {
     private actions$: Actions,
     private navi: OnsNavigator,
     private params: Params,
-  ) {
-    this.todo$ = store.select(TodoReducer.getTodo);
-    this.loading$ = store.select(TodoReducer.getLoading);
-  }
+  ) {}
 
   /**
    * Open action sheet
@@ -106,6 +103,8 @@ export class Page2Component implements OnInit, OnDestroy {
    * Initialize
    */
   ngOnInit() {
+    this.todo$ = this.store.select(TodoReducer.getTodo);
+    this.loading$ = this.store.select(TodoReducer.getLoading);
     this.todo = Object.assign({}, this.params.data.todo);
     this.store.dispatch(new TodoAction.Find(this.todo.id));
     this.todo$
