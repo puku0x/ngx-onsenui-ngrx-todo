@@ -29,7 +29,7 @@ script:
   - npm run test --code-coverage
   - npm run e2e
 
-success:
+after_success:
   - codecov
   - cat ./coverage/coverage.lcov | ./node_modules/coveralls/bin/coveralls.js
 

@@ -1,4 +1,5 @@
 [![Build Status][travis-ci-image]][travis-ci-url]
+[![Coverage Status][coveralls-image]][coveralls-url]
 [![Dependency status][david-dm-image]][david-dm-url]
 [![Dev Dependency status][david-dm-dev-image]][david-dm-dev-url]
 # ngx-onsenui-ngrx-todo
@@ -58,7 +59,10 @@ This assumes that you have the Android SDK installed.
 
 [travis-ci-url]: http://travis-ci.org/puku0x/ngx-onsenui-ngrx-todo
 [travis-ci-image]: https://travis-ci.org/puku0x/ngx-onsenui-ngrx-todo.svg?branch=master
+[coveralls-url]: https://coveralls.io/github/puku0x/ngx-onsenui-ngrx-todo?branch=master
+[coveralls-image]: https://coveralls.io/repos/github/puku0x/ngx-onsenui-ngrx-todo/badge.svg?branch=master
 [david-dm-url]:https://david-dm.org/puku0x/ngx-onsenui-ngrx-todo
 [david-dm-image]:https://david-dm.org/puku0x/ngx-onsenui-ngrx-todo.svg
 [david-dm-dev-url]:https://david-dm.org/puku0x/ngx-onsenui-ngrx-todo?type=dev
 [david-dm-dev-image]:https://david-dm.org/puku0x/ngx-onsenui-ngrx-todo/dev-status.svg
+
