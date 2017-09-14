@@ -1,7 +1,7 @@
 import * as TodoAction from './todo.action';
 import { Todo } from '../../../interfaces';
 
-describe('actions', () => {
+describe('TodoAction', () => {
   it('should create an action to find all todos', () => {
     const expectedAction = {
       type: TodoAction.FIND_ALL,

@@ -2,7 +2,7 @@ import * as TodoReducer from './todo.reducer';
 import * as TodoAction from '../../actions/todo/todo.action';
 import { Todo } from '../../../interfaces';
 
-describe('reducers', () => {
+describe('TodoReducer', () => {
   it('should return the initial state', () => {
     expect(TodoReducer.reducer(undefined, {type: null})).toEqual(TodoReducer.initialState)
   });
