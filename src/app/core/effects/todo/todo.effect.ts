@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { Action } from '@ngrx/store';
 import { Actions, Effect, toPayload } from '@ngrx/effects';
-import * as TodoAction from '../actions/todo.action';
-import { TodoService } from '../services/todo.service';
+import * as TodoAction from '../../actions/todo/todo.action';
+import { TodoService } from '../../services/todo.service';
 
 /**
  * Effect

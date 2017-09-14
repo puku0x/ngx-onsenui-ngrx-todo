@@ -2,8 +2,8 @@ import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subject } from 'rxjs/Rx';
 import { Store } from '@ngrx/store';
 
-import * as SpinnerAction from '../core/actions/spinner.action';
-import * as SpinnerReducer from '../core/reducers/spinner.reducer';
+import * as SpinnerAction from '../core/actions/spinner/spinner.action';
+import * as SpinnerReducer from '../core/reducers/spinner/spinner.reducer';
 
 @Component({
   selector: 'app-spinner',

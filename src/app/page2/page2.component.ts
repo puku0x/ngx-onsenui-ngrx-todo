@@ -5,10 +5,10 @@ import { Actions } from '@ngrx/effects';
 import { OnsNavigator, Params } from 'ngx-onsenui';
 import * as ons from 'onsenui';
 
-import * as SpinnerAction from '../core/actions/spinner.action';
-import * as SpinnerReducer from '../core/reducers/spinner.reducer';
-import * as TodoAction from '../core/actions/todo.action';
-import * as TodoReducer from '../core/reducers/todo.reducer';
+import * as SpinnerAction from '../core/actions/spinner/spinner.action';
+import * as SpinnerReducer from '../core/reducers/spinner/spinner.reducer';
+import * as TodoAction from '../core/actions/todo/todo.action';
+import * as TodoReducer from '../core/reducers/todo/todo.reducer';
 import { Todo } from '../interfaces';
 import { Page3Component } from '../page3/page3.component';
 

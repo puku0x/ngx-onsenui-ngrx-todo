@@ -1,5 +1,5 @@
 import { Action, createSelector, createFeatureSelector } from '@ngrx/store';
-import * as SpinnerAction from '../actions/spinner.action';
+import * as SpinnerAction from '../../actions/spinner/spinner.action';
 
 /**
  * State

@@ -3,9 +3,7 @@ sudo: false
 language: node_js
 
 node_js:
-  - "6"
-  - "7"
-  - node
+  - stable
 
 dist: trusty
 
@@ -21,13 +19,21 @@ addons:
       - google-chrome-stable
 
 before_install:
+  - npm install -g codecov
+  - npm install coveralls
   - npm install -g @angular/cli
   - npm install -g phonegap
   - npm install -g webpack
 
 script:
-  - npm run test
+  - npm run test --code-coverage
   - npm run e2e
+
+success:
+  - codecov
+  - cat ./coverage/coverage.lcov | ./node_modules/coveralls/bin/coveralls.js
+
+before_deploy:
   - npm run build:prod
 
 deploy:

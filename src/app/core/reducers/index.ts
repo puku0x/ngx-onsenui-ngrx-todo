@@ -1,6 +1,6 @@
 import { ActionReducerMap } from '@ngrx/store';
-import * as fromSpinner from './spinner.reducer';
-import * as fromTodo from './todo.reducer';
+import * as fromSpinner from './spinner/spinner.reducer';
+import * as fromTodo from './todo/todo.reducer';
 
 /**
  * App state

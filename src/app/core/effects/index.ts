@@ -1,4 +1,4 @@
-import { TodoEffects } from './todo.effect';
+import { TodoEffects } from './todo/todo.effect';
 
 /**
  * Effects
