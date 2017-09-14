@@ -7,7 +7,7 @@
   </div>
 </ons-toolbar>
 <div class="content">
-  <ons-pull-hook height="64px" threshold-height="128px" (changestate)="onChangeState($event)" (action)="onAction($event)">{{message}}</ons-pull-hook>
+  <ons-pull-hook height="64px" threshold-height="-1" (changestate)="onChangeState($event)" (action)="onAction($event)">{{message}}</ons-pull-hook>
   <ons-list>
     <ons-list-item tappable modifier="chevron" *ngFor="let todo of todos$ | async" (click)="detail(todo)">
       {{todo.content}}
