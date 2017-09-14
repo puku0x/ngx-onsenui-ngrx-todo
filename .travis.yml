@@ -26,8 +26,8 @@ before_install:
   - npm install -g webpack
 
 script:
-  - npm run test --code-coverage
-  - npm run e2e
+  - ng test --single-run --code-coverage
+  - ng e2e
 
 after_success:
   - codecov
