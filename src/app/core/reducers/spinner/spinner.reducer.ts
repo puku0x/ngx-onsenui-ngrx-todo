@@ -34,6 +34,8 @@ export function reducer(state = initialState, action: SpinnerAction.Actions): St
   }
 }
 
-// Selector
+/**
+ * Selectors
+ */
 export const getState = createFeatureSelector<State>('spinner');
 export const getShowing = createSelector(getState, (state: State) => state.showing);

@@ -15,11 +15,8 @@ describe('StaffService', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        //CoreModule,
       ],
       providers: [
-        // HttpClient,
-        // HttpTestingController,
         TodoService
       ]
     });
