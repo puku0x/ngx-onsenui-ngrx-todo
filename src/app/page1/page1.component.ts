@@ -3,9 +3,9 @@ import { Observable } from 'rxjs/Rx';
 import { Store } from '@ngrx/store';
 import { OnsNavigator, Params } from 'ngx-onsenui';
 
-import * as TodoAction from '../core/actions/todo/todo.action';
-import * as TodoReducer from '../core/reducers/todo/todo.reducer';
-import { Todo } from '../interfaces';
+import * as TodoAction from '../actions/todo/todo.action';
+import * as fromTodo from '../reducers/todo/todo.reducer';
+import { Todo } from '../models';
 import { Page2Component } from '../page2/page2.component';
 import { Page3Component } from '../page3/page3.component';
 
@@ -25,7 +25,7 @@ export class Page1Component implements OnInit {
    * @param params
    */
   constructor(
-    private store: Store<TodoReducer.State>,
+    private store: Store<fromTodo.State>,
     private navi: OnsNavigator,
     private params: Params,
   ) {}
@@ -94,7 +94,7 @@ export class Page1Component implements OnInit {
    * Initialize
    */
   ngOnInit() {
-    this.todos$ = this.store.select(TodoReducer.getTodos);
+    this.todos$ = this.store.select(fromTodo.getTodos);
     this.load();
   }
 

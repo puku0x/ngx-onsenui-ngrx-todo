@@ -1,15 +1,17 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { StoreModule, Store } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { OnsenModule, OnsNavigator, Params } from 'ngx-onsenui';
 
-import { effects } from '../core/effects';
-import { reducers } from '../core/reducers';
+import { reducers } from '../reducers';
+import { effects } from '../effects';
+import * as TodoAction from '../actions/todo/todo.action';
+import * as fromTodo from '../reducers/todo/todo.reducer';
 import { TodoService } from '../core/services/todo.service';
-import { Todo } from '../interfaces';
+import { Todo } from '../models';
 import { Page1Component } from './page1.component';
 import { Page2Component } from '../page2/page2.component';
 import { Page3Component } from '../page3/page3.component';
@@ -35,6 +37,9 @@ class ParamsMock {
 }
 
 describe('Page1Component', () => {
+  let component: Page1Component;
+  let fixture: ComponentFixture<Page1Component>;
+  let store: Store<fromTodo.State>;
   let navi: OnsNavigatorMock;
 
   beforeEach(async(() => {
@@ -59,40 +64,40 @@ describe('Page1Component', () => {
         { provide: Params, useClass: ParamsMock }
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
-
     }).compileComponents();
-
     navi = TestBed.get(OnsNavigator);
+    store = TestBed.get(Store);
+    spyOn(store, 'dispatch').and.callThrough();
+    fixture = TestBed.createComponent(Page1Component);
+    component = fixture.debugElement.componentInstance;
   }));
 
   it('should create the page1', async(() => {
-    const fixture = TestBed.createComponent(Page1Component);
-    const page1 = fixture.debugElement.componentInstance;
-    expect(page1).toBeTruthy();
+    expect(component).toBeTruthy();
   }));
 
   it('should change the message', async(() => {
-    const fixture = TestBed.createComponent(Page1Component);
-    const page1 = fixture.debugElement.componentInstance;
-    page1.onChangeState({state: 'initial'});
-    expect(page1.message).toEqual('Pull down to refresh');
-    page1.onChangeState({state: 'preaction'});
-    expect(page1.message).toEqual('Release to refresh');
-    page1.onChangeState({state: 'action'});
-    expect(page1.message).toEqual('Loading data...');
+    component.onChangeState({state: 'initial'});
+    expect(component.message).toEqual('Pull down to refresh');
+    component.onChangeState({state: 'preaction'});
+    expect(component.message).toEqual('Release to refresh');
+    component.onChangeState({state: 'action'});
+    expect(component.message).toEqual('Loading data...');
   }));
 
+  it('should dispatch an action to load data', () => {
+    const action = new TodoAction.FindAll();
+    component.load();
+    expect(store.dispatch).toHaveBeenCalledWith(action);
+  });
+
   it('should go to page2, when detail() called', async(() => {
-    const fixture = TestBed.createComponent(Page1Component);
-    const page1 = fixture.debugElement.componentInstance;
-    page1.detail(new Todo(1, 'test'));
+    component.detail(new Todo(1, 'test'));
     expect(navi.component).toEqual(Page2Component);
   }));
 
   it('should go to page3, when add() called', async(() => {
-    const fixture = TestBed.createComponent(Page1Component);
-    const page1 = fixture.debugElement.componentInstance;
-    page1.add();
+    component.add();
     expect(navi.component).toEqual(Page3Component);
   }));
 });

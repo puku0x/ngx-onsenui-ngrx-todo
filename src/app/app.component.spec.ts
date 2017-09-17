@@ -2,11 +2,14 @@ import { TestBed, async } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 import { OnsenModule } from 'ngx-onsenui';
 
+import { effects } from './effects';
+import { reducers } from './reducers';
 import { CoreModule } from './core/core.module';
 import { AppComponent } from './app.component';
-import { SpinnerComponent } from './spinner/spinner.component';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -14,12 +17,13 @@ describe('AppComponent', () => {
       imports: [
         FormsModule,
         HttpClientModule,
+        StoreModule.forRoot(reducers),
+        EffectsModule.forRoot(effects),
         OnsenModule,
         CoreModule.forRoot(),
       ],
       declarations: [
         AppComponent,
-        SpinnerComponent
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
 

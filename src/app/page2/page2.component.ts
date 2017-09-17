@@ -5,11 +5,11 @@ import { Actions } from '@ngrx/effects';
 import { OnsNavigator, Params } from 'ngx-onsenui';
 import * as ons from 'onsenui';
 
-import * as SpinnerAction from '../core/actions/spinner/spinner.action';
-import * as SpinnerReducer from '../core/reducers/spinner/spinner.reducer';
-import * as TodoAction from '../core/actions/todo/todo.action';
-import * as TodoReducer from '../core/reducers/todo/todo.reducer';
-import { Todo } from '../interfaces';
+import * as SpinnerAction from '../actions/spinner/spinner.action';
+import * as TodoAction from '../actions/todo/todo.action';
+import * as fromSpinner from '../reducers/spinner/spinner.reducer';
+import * as fromTodo from '../reducers/todo/todo.reducer';
+import { Todo } from '../models';
 import { Page3Component } from '../page3/page3.component';
 
 @Component({
@@ -32,8 +32,8 @@ export class Page2Component implements OnInit, OnDestroy {
    * @param params
    */
   constructor(
-    private spinner: Store<SpinnerReducer.State>,
-    private store: Store<TodoReducer.State>,
+    private spinner: Store<fromSpinner.State>,
+    private store: Store<fromTodo.State>,
     private actions$: Actions,
     private navi: OnsNavigator,
     private params: Params,
@@ -103,8 +103,8 @@ export class Page2Component implements OnInit, OnDestroy {
    * Initialize
    */
   ngOnInit() {
-    this.todo$ = this.store.select(TodoReducer.getTodo);
-    this.loading$ = this.store.select(TodoReducer.getLoading);
+    this.todo$ = this.store.select(fromTodo.getTodo);
+    this.loading$ = this.store.select(fromTodo.getLoading);
     this.todo = Object.assign({}, this.params.data.todo);
     this.store.dispatch(new TodoAction.Find(this.todo.id));
     this.todo$

@@ -1,19 +1,20 @@
-import { NgModule, ModuleWithProviders, Optional, SkipSelf } from '@angular/core';
+import { NgModule, ModuleWithProviders, Optional, SkipSelf, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
 
-import { effects } from './effects';
-import { reducers } from './reducers';
-import { TodoService } from './services/todo.service';
+import { TodoService } from './services';
+import { SpinnerComponent } from './spinner/spinner.component';
 
 @NgModule({
   imports: [
-    CommonModule,
-    StoreModule.forRoot(reducers),
-    EffectsModule.forRoot(effects)
+    CommonModule
   ],
-  declarations: []
+  exports: [
+    SpinnerComponent,
+  ],
+  declarations: [
+    SpinnerComponent,
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class CoreModule {
   static forRoot(): ModuleWithProviders {
