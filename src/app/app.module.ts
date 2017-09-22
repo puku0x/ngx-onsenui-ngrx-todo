@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { OnsenModule } from 'ngx-onsenui';
 
@@ -34,6 +35,7 @@ const pages = [ Page1Component, Page2Component, Page3Component ];
     BrowserModule,
     HttpClientModule,
     StoreModule.forRoot(reducers),
+    StoreDevtoolsModule.instrument(),
     EffectsModule.forRoot(effects),
     OnsenModule,
     CoreModule.forRoot(),

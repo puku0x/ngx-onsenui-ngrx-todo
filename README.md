@@ -49,6 +49,8 @@ phonegap run android
 
 This assumes that you have the Android SDK installed.
 
+To debug a Redux app, please use [Redux DevTools extention](https://github.com/zalmoxisus/redux-devtools-extension) .
+
 ## Contributing
 
 1. Fork it ( https://github.com/puku0x/ngx-onsenui-ngrx-todo/fork )

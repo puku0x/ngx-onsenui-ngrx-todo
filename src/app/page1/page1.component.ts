@@ -15,7 +15,7 @@ import { Page3Component } from '../page3/page3.component';
   styleUrls: ['./page1.component.scss']
 })
 export class Page1Component implements OnInit {
-  message: string;
+  message = 'Pull down to refresh';
   todos$: Observable<Todo[]>;
 
   /**
