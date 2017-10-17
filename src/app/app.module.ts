@@ -6,14 +6,14 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { OnsenModule } from 'ngx-onsenui';
 
-import { effects } from './effects';
-import { reducers } from './reducers';
+import { effects } from './store/effects';
+import { reducers } from './store/reducers';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { AppComponent } from './app.component';
-import { Page1Component } from './page1/page1.component';
-import { Page2Component } from './page2/page2.component';
-import { Page3Component } from './page3/page3.component';
+import { Page1Component } from './pages/page1/page1.component';
+import { Page2Component } from './pages/page2/page2.component';
+import { Page3Component } from './pages/page3/page3.component';
 
 /**
  * Page components

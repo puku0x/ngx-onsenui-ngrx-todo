@@ -5,11 +5,10 @@ import { Actions } from '@ngrx/effects';
 import { OnsNavigator, Params } from 'ngx-onsenui';
 import * as ons from 'onsenui';
 
-import * as SpinnerAction from '../actions/spinner/spinner.action';
-import * as TodoAction from '../actions/todo/todo.action';
-import * as fromSpinner from '../reducers/spinner/spinner.reducer';
-import * as fromTodo from '../reducers/todo/todo.reducer';
-import { Todo } from '../models';
+import * as SpinnerAction from '../../store/actions/spinner/spinner.action';
+import * as TodoAction from '../../store/actions/todo/todo.action';
+import * as fromTodo from '../../store/reducers/todo/todo.reducer';
+import { Todo } from '../../models';
 import { Page3Component } from '../page3/page3.component';
 
 @Component({
@@ -25,14 +24,12 @@ export class Page2Component implements OnInit, OnDestroy {
 
   /**
    * Constructor
-   * @param spinner
    * @param store
    * @param actions$
    * @param navi
    * @param params
    */
   constructor(
-    private spinner: Store<fromSpinner.State>,
     private store: Store<fromTodo.State>,
     private actions$: Actions,
     private navi: OnsNavigator,
@@ -81,35 +78,42 @@ export class Page2Component implements OnInit, OnDestroy {
    * @param todo
    */
   delete(todo: Todo) {
-    this.spinner.dispatch(new SpinnerAction.Show());
+    this.store.dispatch(new SpinnerAction.Show());
     this.store.dispatch(new TodoAction.Delete(todo.id));
-    const success = this.actions$
-      .ofType(TodoAction.DELETE_SUCCESS)
-      .do(() => {
-        this.navi.nativeElement.popPage();
-      });
-    const failed = this.actions$
-      .ofType(TodoAction.DELETE_FAILED)
-      .do(() => {
-        ons.notification.toast({
-          message: 'Failed to delete',
-          timeout: 2000
-        });
-      });
-    Observable.race(success, failed).take(1).subscribe(() => this.spinner.dispatch(new SpinnerAction.Hide()));
   }
 
   /**
    * Initialize
    */
   ngOnInit() {
-    this.todo$ = this.store.select(fromTodo.getTodo);
-    this.loading$ = this.store.select(fromTodo.getLoading);
     this.todo = Object.assign({}, this.params.data.todo);
     this.store.dispatch(new TodoAction.Find(this.todo.id));
+    this.loading$ = this.store.select(fromTodo.getLoading);
+    this.todo$ = this.store.select(fromTodo.getTodo);
     this.todo$
       .takeUntil(this.onDestroy)
       .subscribe(todo => this.todo = todo);
+
+    // Delete event
+    Observable.merge(
+      this.actions$
+        .ofType(TodoAction.DELETE_SUCCESS)
+        .map(action => {
+          this.navi.nativeElement.popPage();
+        }),
+      this.actions$
+        .ofType(TodoAction.DELETE_FAILURE)
+        .map(action => {
+          ons.notification.toast({
+            message: 'Failed to delete',
+            timeout: 2000
+          });
+        })
+      )
+      .takeUntil(this.onDestroy)
+      .subscribe(() => {
+        this.store.dispatch(new SpinnerAction.Hide());
+      });
   }
 
   /**

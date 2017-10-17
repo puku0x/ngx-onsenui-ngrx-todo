@@ -1,20 +1,22 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { HttpClientModule } from '@angular/common/http';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { StoreModule, Store } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
+import { EffectsModule, Actions } from '@ngrx/effects';
+import { provideMockActions } from '@ngrx/effects/testing';
+import { Observable } from 'rxjs/Rx';
 import { OnsenModule, OnsNavigator, Params } from 'ngx-onsenui';
 
-import { reducers } from '../reducers';
-import { effects } from '../effects';
-import * as TodoAction from '../actions/todo/todo.action';
-import * as fromTodo from '../reducers/todo/todo.reducer';
-import { TodoService } from '../core/services/todo.service';
-import { Todo } from '../models';
-import { Page1Component } from './page1.component';
+import { reducers } from '../../store/reducers';
+import { effects } from '../../store/effects';
+import * as TodoAction from '../../store/actions/todo/todo.action';
+import * as fromTodo from '../../store/reducers/todo/todo.reducer';
+import { TodoService } from '../../core/services';
+import { Todo } from '../../models';
+import { Page3Component } from './page3.component';
+import { Page1Component } from '../page1/page1.component';
 import { Page2Component } from '../page2/page2.component';
-import { Page3Component } from '../page3/page3.component';
 
 /**
  * Mock for OnsNavigator
@@ -26,8 +28,11 @@ class OnsNavigatorMock {
     pushPage: (component, params) => {
       this.component = component;
       this.params = params;
+    },
+    popPage: () => {
+      this.component = Page2Component;
     }
-  }
+  };
 }
 
 /**
@@ -36,23 +41,23 @@ class OnsNavigatorMock {
 class ParamsMock {
 }
 
-describe('Page1Component', () => {
-  let component: Page1Component;
-  let fixture: ComponentFixture<Page1Component>;
+describe('Page3Component', () => {
+  let component: Page3Component;
+  let fixture: ComponentFixture<Page3Component>;
   let store: Store<fromTodo.State>;
+  let actions: Observable<any>;
   let navi: OnsNavigatorMock;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
         FormsModule,
-        HttpClientModule,
         StoreModule.forRoot(reducers),
         EffectsModule.forRoot(effects),
         OnsenModule,
       ],
       declarations: [
-        Page1Component,
+        Page3Component,
       ],
       providers: [
         Store,
@@ -68,36 +73,31 @@ describe('Page1Component', () => {
     navi = TestBed.get(OnsNavigator);
     store = TestBed.get(Store);
     spyOn(store, 'dispatch').and.callThrough();
-    fixture = TestBed.createComponent(Page1Component);
+    fixture = TestBed.createComponent(Page3Component);
     component = fixture.debugElement.componentInstance;
   }));
 
-  it('should create the page1', async(() => {
+  it('should create the page3', async(() => {
     expect(component).toBeTruthy();
   }));
 
-  it('should change the message', async(() => {
-    component.onChangeState({state: 'initial'});
-    expect(component.message).toEqual('Pull down to refresh');
-    component.onChangeState({state: 'preaction'});
-    expect(component.message).toEqual('Release to refresh');
-    component.onChangeState({state: 'action'});
-    expect(component.message).toEqual('Loading data...');
-  }));
-
-  it('should dispatch an action to load data', () => {
-    const action = new TodoAction.FindAll();
-    component.load();
+  it('should dispatch an action to create data', () => {
+    const todo = new Todo(null, 'test');
+    const action = new TodoAction.Create(todo);
+    component.create(todo);
     expect(store.dispatch).toHaveBeenCalledWith(action);
   });
 
-  it('should go to page2, when detail() called', async(() => {
-    component.detail(new Todo(1, 'test'));
+  it('should dispatch an action to update data', () => {
+    const todo = new Todo(1, 'test');
+    const action = new TodoAction.Update(todo);
+    component.update(todo);
+    expect(store.dispatch).toHaveBeenCalledWith(action);
+  });
+
+  it('should go to page2, when cancel() called', async(() => {
+    component.cancel();
     expect(navi.component).toEqual(Page2Component);
   }));
 
-  it('should go to page3, when add() called', async(() => {
-    component.add();
-    expect(navi.component).toEqual(Page3Component);
-  }));
 });

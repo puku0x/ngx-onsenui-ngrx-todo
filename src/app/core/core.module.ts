@@ -1,9 +1,14 @@
 import { NgModule, ModuleWithProviders, Optional, SkipSelf, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { TodoService } from './services';
-import { SpinnerComponent } from './spinner/spinner.component';
+import { RequestInterceptor } from './interceptors';
+import { SpinnerComponent } from './components';
 
+/**
+ * Core module
+ */
 @NgModule({
   imports: [
     CommonModule
@@ -22,6 +27,7 @@ export class CoreModule {
       ngModule: CoreModule,
       providers: [
         TodoService,
+        { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true },
       ]
     };
   }

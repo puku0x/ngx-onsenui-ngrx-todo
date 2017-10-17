@@ -4,7 +4,7 @@ import { Action } from '@ngrx/store';
 import { Actions, Effect, toPayload } from '@ngrx/effects';
 
 import * as TodoAction from '../../actions/todo/todo.action';
-import { TodoService } from '../../core/services';
+import { TodoService } from '../../../core/services';
 
 /**
  * Effect
@@ -26,7 +26,7 @@ export class TodoEffects {
       this.todoService
         .findAll(payload.offset, payload.limit)
         .map(data => new TodoAction.FindAllSuccess(data.content))
-        .catch(error => Observable.of(new TodoAction.FindAllFailed(error)))
+        .catch(error => Observable.of(new TodoAction.FindAllFailure(error)))
     );
 
   /**
@@ -39,7 +39,7 @@ export class TodoEffects {
       this.todoService
         .find(payload)
         .map(data => new TodoAction.FindSuccess(data))
-        .catch(error => Observable.of(new TodoAction.FindFailed(error)))
+        .catch(error => Observable.of(new TodoAction.FindFailure(error)))
     );
 
   /**
@@ -52,7 +52,7 @@ export class TodoEffects {
       this.todoService
         .create(payload)
         .map(data => new TodoAction.CreateSuccess(data))
-        .catch(error => Observable.of(new TodoAction.CreateFailed(error)))
+        .catch(error => Observable.of(new TodoAction.CreateFailure(error)))
     );
 
   /**
@@ -75,7 +75,7 @@ export class TodoEffects {
       this.todoService
         .update(payload)
         .map(data => new TodoAction.UpdateSuccess(data))
-        .catch(error => Observable.of(new TodoAction.UpdateFailed(error)))
+        .catch(error => Observable.of(new TodoAction.UpdateFailure(error)))
     );
 
   /**
@@ -97,8 +97,8 @@ export class TodoEffects {
     .switchMap(payload =>
       this.todoService
         .delete(payload)
-        .map(() => new TodoAction.DeleteSuccess(payload))
-        .catch(error => Observable.of(new TodoAction.DeleteFailed(error)))
+        .map(data => new TodoAction.DeleteSuccess(data.id))
+        .catch(error => Observable.of(new TodoAction.DeleteFailure(error)))
     );
 
   /**

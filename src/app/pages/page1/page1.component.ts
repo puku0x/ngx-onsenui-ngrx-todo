@@ -3,9 +3,9 @@ import { Observable } from 'rxjs/Rx';
 import { Store } from '@ngrx/store';
 import { OnsNavigator, Params } from 'ngx-onsenui';
 
-import * as TodoAction from '../actions/todo/todo.action';
-import * as fromTodo from '../reducers/todo/todo.reducer';
-import { Todo } from '../models';
+import * as TodoAction from '../../store/actions/todo/todo.action';
+import * as fromTodo from '../../store/reducers/todo/todo.reducer';
+import { Todo } from '../../models';
 import { Page2Component } from '../page2/page2.component';
 import { Page3Component } from '../page3/page3.component';
 

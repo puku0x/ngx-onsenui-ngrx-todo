@@ -2,16 +2,17 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Rx';
 
-import { Page, Todo } from '../../models';
+import { Page, Todo } from '../../../models';
 
 /**
  * Service
  */
 @Injectable()
 export class TodoService {
-  baseUrl = 'https://spring-boot-travis-heroku.herokuapp.com/api/v1';
-  // baseUrl = 'http://localhost:8080/api/v1';
-
+  /**
+   * Constructor
+   * @param http
+   */
   constructor(private http: HttpClient) { }
 
   /**
@@ -20,7 +21,7 @@ export class TodoService {
    * @param limit
    */
   findAll(offset?: number, limit?: number): Observable<Page<Todo>> {
-    const url = `${this.baseUrl}/todos`;
+    const url = `/todos`;
     return this.http.get<Page<Todo>>(url);
   }
 
@@ -29,7 +30,7 @@ export class TodoService {
    * @param id
    */
   find(id: number): Observable<Todo> {
-    const url = `${this.baseUrl}/todos/${id}`;
+    const url = `/todos/${id}`;
     return this.http.get<Todo>(url);
   }
 
@@ -38,7 +39,7 @@ export class TodoService {
    * @param todo
    */
   create(todo: Todo): Observable<Todo> {
-    const url = `${this.baseUrl}/todos`;
+    const url = `/todos`;
     return this.http.post<Todo>(url, todo);
   }
 
@@ -47,7 +48,7 @@ export class TodoService {
    * @param todo
    */
   update(todo: Todo): Observable<Todo> {
-    const url = `${this.baseUrl}/todos/${todo.id}`;
+    const url = `/todos/${todo.id}`;
     return this.http.put<Todo>(url, todo);
   }
 
@@ -55,9 +56,9 @@ export class TodoService {
    * Delete
    * @param todo
    */
-  delete(id: number): Observable<void>  {
-    const url = `${this.baseUrl}/todos/${id}`;
-    return this.http.delete<void>(url);
+  delete(id: number): Observable<Todo>  {
+    const url = `/todos/${id}`;
+    return this.http.delete<Todo>(url);
   }
 
 }

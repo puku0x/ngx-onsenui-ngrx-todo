@@ -1,12 +1,11 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
-import { CoreModule } from '../core.module';
+import { CoreModule } from '../../core.module';
 import { TodoService } from './todo.service';
-import { Page, Todo } from '../../models';
+import { Page, Todo } from '../../../models';
 
 describe('TodoService', () => {
-  const baseUrl = 'https://spring-boot-travis-heroku.herokuapp.com/api/v1';
   let service: TodoService;
   let httpMock: HttpTestingController;
 
@@ -38,12 +37,12 @@ describe('TodoService', () => {
       sort: null,
       totalElements: 3,
       totalPages: 1
-    }
+    };
     service.findAll().subscribe(data => {
       expect(data).toEqual(response);
     });
     httpMock
-      .expectOne(`${baseUrl}/todos`)
+      .expectOne(`/todos`)
       .flush(response);
     httpMock.verify();
   });
@@ -54,7 +53,7 @@ describe('TodoService', () => {
       expect(data).toEqual(todo);
     });
     httpMock
-      .expectOne(`${baseUrl}/todos/1`)
+      .expectOne(`/todos/1`)
       .flush(todo);
     httpMock.verify();
   });
@@ -65,7 +64,7 @@ describe('TodoService', () => {
       expect(data).toEqual(todo);
     });
     httpMock
-      .expectOne(`${baseUrl}/todos`)
+      .expectOne(`/todos`)
       .flush(todo);
     httpMock.verify();
   });
@@ -77,7 +76,7 @@ describe('TodoService', () => {
       expect(data).toEqual(todo2);
     });
     httpMock
-      .expectOne(`${baseUrl}/todos/1`)
+      .expectOne(`/todos/1`)
       .flush(todo2);
     httpMock.verify();
   });
@@ -88,7 +87,7 @@ describe('TodoService', () => {
       expect(data).toEqual(null);
     });
     httpMock
-      .expectOne(`${baseUrl}/todos/1`);
+      .expectOne(`/todos/1`);
     httpMock.verify();
   });
 

@@ -8,12 +8,12 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import { Observable } from 'rxjs/Rx';
 import { OnsenModule, OnsNavigator, Params } from 'ngx-onsenui';
 
-import { reducers } from '../reducers';
-import { effects } from '../effects';
-import * as TodoAction from '../actions/todo/todo.action';
-import * as fromTodo from '../reducers/todo/todo.reducer';
-import { TodoService } from '../core/services/todo.service';
-import { Todo } from '../models';
+import { reducers } from '../../store/reducers';
+import { effects } from '../../store/effects';
+import * as TodoAction from '../../store/actions/todo/todo.action';
+import * as fromTodo from '../../store/reducers/todo/todo.reducer';
+import { TodoService } from '../../core/services';
+import { Todo } from '../../models';
 import { Page2Component } from './page2.component';
 import { Page1Component } from '../page1/page1.component';
 import { Page3Component } from '../page3/page3.component';
@@ -29,7 +29,7 @@ class OnsNavigatorMock {
       this.component = component;
       this.params = params;
     }
-  }
+  };
 }
 
 /**

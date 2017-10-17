@@ -6,8 +6,8 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { OnsenModule } from 'ngx-onsenui';
 
-import { effects } from './effects';
-import { reducers } from './reducers';
+import { effects } from './store/effects';
+import { reducers } from './store/reducers';
 import { CoreModule } from './core/core.module';
 import { AppComponent } from './app.component';
 
