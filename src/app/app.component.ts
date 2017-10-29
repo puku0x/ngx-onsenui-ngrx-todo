@@ -9,6 +9,4 @@ import { Page1Component } from './pages/page1/page1.component';
 })
 export class AppComponent {
   rootPage = Page1Component;
-
-  constructor() { }
 }
