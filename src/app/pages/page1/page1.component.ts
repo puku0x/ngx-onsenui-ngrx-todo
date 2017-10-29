@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
 import { Store } from '@ngrx/store';
 import { Actions } from '@ngrx/effects';
 import { OnsNavigator, Params } from 'ngx-onsenui';
+import { Observable } from 'rxjs/Observable';
+import { race } from 'rxjs/observable/race';
+import { take } from 'rxjs/operators';
 
 import * as TodoAction from '../../store/actions/todo/todo.action';
 import * as fromTodo from '../../store/reducers/todo/todo.reducer';
@@ -50,7 +52,7 @@ export class Page1Component implements OnInit {
     // Load done
     const success = this.actions$.ofType(TodoAction.FIND_ALL_SUCCESS);
     const failure = this.actions$.ofType(TodoAction.FIND_ALL_FAILURE);
-    Observable.race(success, failure).take(1).subscribe(() => $event.done());
+    race(success, failure).pipe(take(1)).subscribe(() => $event.done());
   }
 
   /**

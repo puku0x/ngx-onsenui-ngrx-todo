@@ -1,9 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Observable, Subject } from 'rxjs/Rx';
 import { Store } from '@ngrx/store';
 import { Actions } from '@ngrx/effects';
 import { OnsNavigator, Params } from 'ngx-onsenui';
 import * as ons from 'onsenui';
+import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable';
+import { merge } from 'rxjs/observable/merge';
+import { takeUntil, tap } from 'rxjs/operators';
 
 import * as SpinnerAction from '../../store/actions/spinner/spinner.action';
 import * as TodoAction from '../../store/actions/todo/todo.action';
@@ -45,26 +48,33 @@ export class Page2Component implements OnInit, OnDestroy {
     this.loading$ = this.store.select(fromTodo.getLoading);
     this.todo$ = this.store.select(fromTodo.getTodo);
     this.todo$
-      .takeUntil(this.onDestroy)
-      .subscribe(todo => this.todo = todo);
+      .pipe(takeUntil(this.onDestroy))
+      .subscribe((todo: Todo[]) => this.todo = todo);
 
-    // Delete event
-    Observable.merge(
-      this.actions$
-        .ofType(TodoAction.DELETE_SUCCESS)
-        .map(action => {
+    // Delete success
+    const deleteSuccess = this.actions$
+      .ofType(TodoAction.DELETE_SUCCESS)
+      .pipe(
+        tap(() => {
           this.navi.nativeElement.popPage();
-        }),
-      this.actions$
-        .ofType(TodoAction.DELETE_FAILURE)
-        .map(action => {
+        })
+      );
+
+    // Delete failure
+    const deleteFailure = this.actions$
+      .ofType(TodoAction.DELETE_FAILURE)
+      .pipe(
+        tap(() => {
           ons.notification.toast({
             message: 'Failed to delete',
             timeout: 2000
           });
         })
-      )
-      .takeUntil(this.onDestroy)
+      );
+
+    // Hide spinner when delete finished
+    merge(deleteSuccess, deleteFailure)
+      .pipe(takeUntil(this.onDestroy))
       .subscribe(() => {
         this.store.dispatch(new SpinnerAction.Hide());
       });

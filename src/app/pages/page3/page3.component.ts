@@ -1,9 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Observable, Subject } from 'rxjs/Rx';
 import { Store } from '@ngrx/store';
-import { Actions } from '@ngrx/effects';
+import { Actions, toPayload } from '@ngrx/effects';
 import { OnsNavigator, Params } from 'ngx-onsenui';
 import * as ons from 'onsenui';
+import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable';
+import { merge } from 'rxjs/observable/merge';
+import { map, takeUntil, tap } from 'rxjs/operators';
 
 import * as SpinnerAction from '../../store/actions/spinner/spinner.action';
 import * as TodoAction from '../../store/actions/todo/todo.action';
@@ -54,6 +57,49 @@ export class Page3Component implements OnInit, OnDestroy {
   }
 
   /**
+   * Initialize
+   */
+  ngOnInit() {
+    this.loading$ = this.store.select(fromTodo.getLoading);
+    this.todo = Object.assign({}, this.params.data.todo);
+
+    // Save success
+    const saveSuccess = this.actions$
+      .ofType(TodoAction.CREATE_SUCCESS, TodoAction.UPDATE_SUCCESS)
+      .pipe(
+        tap(() => {
+          this.navi.nativeElement.popPage();
+        })
+      );
+
+    // Save failure
+    const saveFailure = this.actions$
+      .ofType(TodoAction.CREATE_FAILURE, TodoAction.UPDATE_FAILURE)
+      .pipe(
+        tap(() => {
+          ons.notification.toast({
+            message: 'Failed to save',
+            timeout: 2000
+          });
+        })
+      );
+
+    // Hide spinner when save finished
+    merge(saveSuccess, saveFailure)
+      .pipe(takeUntil(this.onDestroy))
+      .subscribe(() => {
+        this.store.dispatch(new SpinnerAction.Hide());
+      });
+  }
+
+  /**
+   * Finalize
+   */
+  ngOnDestroy() {
+    this.onDestroy.next();
+  }
+
+  /**
    * Save
    * @param todo
    */
@@ -70,42 +116,6 @@ export class Page3Component implements OnInit, OnDestroy {
    */
   cancel() {
     this.navi.nativeElement.popPage();
-  }
-
-  /**
-   * Initialize
-   */
-  ngOnInit() {
-    this.loading$ = this.store.select(fromTodo.getLoading);
-    this.todo = Object.assign({}, this.params.data.todo);
-
-    // Save event
-    Observable.merge(
-      this.actions$
-        .ofType(TodoAction.CREATE_SUCCESS, TodoAction.UPDATE_SUCCESS)
-        .map(action => {
-          this.navi.nativeElement.popPage();
-        }),
-      this.actions$
-        .ofType(TodoAction.CREATE_FAILURE, TodoAction.UPDATE_FAILURE)
-        .map(action => {
-          ons.notification.toast({
-            message: 'Failed to save',
-            timeout: 2000
-          });
-        })
-      )
-      .takeUntil(this.onDestroy)
-      .subscribe(() => {
-        this.store.dispatch(new SpinnerAction.Hide());
-      });
-  }
-
-  /**
-   * Finalize
-   */
-  ngOnDestroy() {
-    this.onDestroy.next();
   }
 
 }

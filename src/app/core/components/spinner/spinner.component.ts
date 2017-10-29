@@ -1,6 +1,8 @@
 import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
-import { Observable, Subject } from 'rxjs/Rx';
 import { Store } from '@ngrx/store';
+import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable';
+import { takeUntil } from 'rxjs/operators';
 
 import * as SpinnerAction from '../../../store/actions/spinner/spinner.action';
 import * as fromSpinner from '../../../store/reducers/spinner/spinner.reducer';
@@ -29,7 +31,7 @@ export class SpinnerComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.showing$ = this.store.select(fromSpinner.getShowing);
     this.showing$
-      .takeUntil(this.onDestroy)
+      .pipe(takeUntil(this.onDestroy))
       .subscribe(showing => {
         if (showing === true) {
           this.modal.nativeElement.show();

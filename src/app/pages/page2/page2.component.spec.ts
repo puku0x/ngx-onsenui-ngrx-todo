@@ -5,7 +5,7 @@ import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { StoreModule, Store } from '@ngrx/store';
 import { EffectsModule, Actions } from '@ngrx/effects';
 import { provideMockActions } from '@ngrx/effects/testing';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { OnsenModule, OnsNavigator, Params } from 'ngx-onsenui';
 
 import { SharedModule } from '../../shared/shared.module';
@@ -43,7 +43,7 @@ describe('Page2Component', () => {
   let component: Page2Component;
   let fixture: ComponentFixture<Page2Component>;
   let store: Store<fromTodo.State>;
-  let actions: Observable<any>;
+  // let actions: Observable<any>;
   let navi: OnsNavigatorMock;
 
   beforeEach(async(() => {
