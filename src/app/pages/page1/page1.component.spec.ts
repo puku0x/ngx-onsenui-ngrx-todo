@@ -6,6 +6,7 @@ import { StoreModule, Store } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { OnsenModule, OnsNavigator, Params } from 'ngx-onsenui';
 
+import { SharedModule } from '../../shared/shared.module';
 import { reducers } from '../../store/reducers';
 import { effects } from '../../store/effects';
 import * as TodoAction from '../../store/actions/todo/todo.action';
@@ -50,6 +51,7 @@ describe('Page1Component', () => {
         StoreModule.forRoot(reducers),
         EffectsModule.forRoot(effects),
         OnsenModule,
+        SharedModule,
       ],
       declarations: [
         Page1Component,
@@ -74,15 +76,6 @@ describe('Page1Component', () => {
 
   it('should create the page1', async(() => {
     expect(component).toBeTruthy();
-  }));
-
-  it('should change the message', async(() => {
-    component.onChangeState({state: 'initial'});
-    expect(component.message).toEqual('Pull down to refresh');
-    component.onChangeState({state: 'preaction'});
-    expect(component.message).toEqual('Release to refresh');
-    component.onChangeState({state: 'action'});
-    expect(component.message).toEqual('Loading data...');
   }));
 
   it('should dispatch an action to load data', () => {

@@ -8,6 +8,7 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import { Observable } from 'rxjs/Rx';
 import { OnsenModule, OnsNavigator, Params } from 'ngx-onsenui';
 
+import { SharedModule } from '../../shared/shared.module';
 import { reducers } from '../../store/reducers';
 import { effects } from '../../store/effects';
 import * as TodoAction from '../../store/actions/todo/todo.action';
@@ -52,6 +53,7 @@ describe('Page2Component', () => {
         StoreModule.forRoot(reducers),
         EffectsModule.forRoot(effects),
         OnsenModule,
+        SharedModule
       ],
       declarations: [
         Page2Component,

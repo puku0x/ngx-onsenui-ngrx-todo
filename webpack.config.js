@@ -4,7 +4,7 @@ const autoprefixer = require('autoprefixer');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = (env) => {
-  // プラグイン設定
+  // Plugins
   const plugins = [
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
@@ -23,12 +23,12 @@ module.exports = (env) => {
     ),
   ];
 
-  // PostCSS設定
+  // PostCSS
   const postcssPlugins = () => {
     autoprefixer
   }
 
-  // ビルド設定
+  // Build config
   const config = {
     entry: {
       'main': ['./src/polyfills.ts', './src/main.ts'],
@@ -39,7 +39,7 @@ module.exports = (env) => {
       filename: '[name].bundle.js',
       chunkFilename: '[id].chunk.js'
     },
-    devtool: 'inline-source-map',
+    devtool: false,
     resolve: {
       extensions: ['.ts', '.js'],
     },
@@ -83,7 +83,8 @@ module.exports = (env) => {
           use: ['url-loader?name=[name].[ext]']
         }, {
           test: /\.ts$/,
-          use: ['awesome-typescript-loader', 'angular2-template-loader']
+          use: ['awesome-typescript-loader', 'angular2-template-loader'],
+          exclude: [/\.(spec|e2e)\.ts$/]
         },
       ]
     }

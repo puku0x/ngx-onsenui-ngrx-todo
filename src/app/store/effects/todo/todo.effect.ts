@@ -56,16 +56,6 @@ export class TodoEffects {
     );
 
   /**
-   * Create success
-   */
-  @Effect({ dispatch: false }) createSuccess$: Observable<Action> = this.actions$
-    .ofType(TodoAction.CREATE_SUCCESS)
-    .map(toPayload)
-    .switchMap(payload =>
-      Observable.of(new TodoAction.FindAll())
-    );
-
-  /**
    * Update
    */
   @Effect() update$: Observable<Action> = this.actions$
@@ -79,16 +69,6 @@ export class TodoEffects {
     );
 
   /**
-   * Update success
-   */
-  @Effect({ dispatch: false }) updateSuccess$: Observable<Action> = this.actions$
-    .ofType(TodoAction.UPDATE_SUCCESS)
-    .map(toPayload)
-    .switchMap(payload =>
-      Observable.of(new TodoAction.FindAll())
-    );
-
-  /**
    * Delete
    */
   @Effect() delete$: Observable<Action> = this.actions$
@@ -99,15 +79,5 @@ export class TodoEffects {
         .delete(payload)
         .map(data => new TodoAction.DeleteSuccess(data.id))
         .catch(error => Observable.of(new TodoAction.DeleteFailure(error)))
-    );
-
-  /**
-   * Delete success
-   */
-  @Effect({ dispatch: false }) deleteSuccess$: Observable<Action> = this.actions$
-    .ofType(TodoAction.DELETE_SUCCESS)
-    .map(toPayload)
-    .switchMap(payload =>
-      Observable.of(new TodoAction.FindAll())
     );
 }

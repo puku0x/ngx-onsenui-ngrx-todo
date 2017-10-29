@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { Store } from '@ngrx/store';
+import { Actions } from '@ngrx/effects';
 import { OnsNavigator, Params } from 'ngx-onsenui';
 
 import * as TodoAction from '../../store/actions/todo/todo.action';
@@ -15,7 +16,7 @@ import { Page3Component } from '../page3/page3.component';
   styleUrls: ['./page1.component.scss']
 })
 export class Page1Component implements OnInit {
-  message = 'Pull down to refresh';
+  state = 'initial';
   todos$: Observable<Todo[]>;
 
   /**
@@ -26,9 +27,18 @@ export class Page1Component implements OnInit {
    */
   constructor(
     private store: Store<fromTodo.State>,
+    private actions$: Actions,
     private navi: OnsNavigator,
     private params: Params,
   ) {}
+
+  /**
+   * Initialize
+   */
+  ngOnInit() {
+    this.todos$ = this.store.select(fromTodo.getTodos);
+    this.load();
+  }
 
   /**
    * Callback for 'action' event
@@ -36,7 +46,11 @@ export class Page1Component implements OnInit {
    */
   onAction($event) {
     this.load();
-    $event.done();
+
+    // Load done
+    const success = this.actions$.ofType(TodoAction.FIND_ALL_SUCCESS);
+    const failure = this.actions$.ofType(TodoAction.FIND_ALL_FAILURE);
+    Observable.race(success, failure).take(1).subscribe(() => $event.done());
   }
 
   /**
@@ -44,17 +58,7 @@ export class Page1Component implements OnInit {
    * @param
    */
   onChangeState($event) {
-    switch ($event.state) {
-      case 'initial':
-        this.message = 'Pull down to refresh';
-        break;
-      case 'preaction':
-        this.message = 'Release to refresh';
-        break;
-      case 'action':
-        this.message = 'Loading data...';
-        break;
-    }
+    this.state = $event.state;
   }
 
   /**
@@ -88,14 +92,6 @@ export class Page1Component implements OnInit {
       animation: 'lift'
     };
     this.navi.nativeElement.pushPage(Page3Component, params);
-  }
-
-  /**
-   * Initialize
-   */
-  ngOnInit() {
-    this.todos$ = this.store.select(fromTodo.getTodos);
-    this.load();
   }
 
 }

@@ -37,6 +37,47 @@ export class Page2Component implements OnInit, OnDestroy {
   ) {}
 
   /**
+   * Initialize
+   */
+  ngOnInit() {
+    this.todo = Object.assign({}, this.params.data.todo);
+    this.store.dispatch(new TodoAction.Find(this.todo.id));
+    this.loading$ = this.store.select(fromTodo.getLoading);
+    this.todo$ = this.store.select(fromTodo.getTodo);
+    this.todo$
+      .takeUntil(this.onDestroy)
+      .subscribe(todo => this.todo = todo);
+
+    // Delete event
+    Observable.merge(
+      this.actions$
+        .ofType(TodoAction.DELETE_SUCCESS)
+        .map(action => {
+          this.navi.nativeElement.popPage();
+        }),
+      this.actions$
+        .ofType(TodoAction.DELETE_FAILURE)
+        .map(action => {
+          ons.notification.toast({
+            message: 'Failed to delete',
+            timeout: 2000
+          });
+        })
+      )
+      .takeUntil(this.onDestroy)
+      .subscribe(() => {
+        this.store.dispatch(new SpinnerAction.Hide());
+      });
+  }
+
+  /**
+   * Finalize
+   */
+  ngOnDestroy() {
+    this.onDestroy.next();
+  }
+
+  /**
    * Open action sheet
    * @param todo
    */
@@ -80,47 +121,6 @@ export class Page2Component implements OnInit, OnDestroy {
   delete(todo: Todo) {
     this.store.dispatch(new SpinnerAction.Show());
     this.store.dispatch(new TodoAction.Delete(todo.id));
-  }
-
-  /**
-   * Initialize
-   */
-  ngOnInit() {
-    this.todo = Object.assign({}, this.params.data.todo);
-    this.store.dispatch(new TodoAction.Find(this.todo.id));
-    this.loading$ = this.store.select(fromTodo.getLoading);
-    this.todo$ = this.store.select(fromTodo.getTodo);
-    this.todo$
-      .takeUntil(this.onDestroy)
-      .subscribe(todo => this.todo = todo);
-
-    // Delete event
-    Observable.merge(
-      this.actions$
-        .ofType(TodoAction.DELETE_SUCCESS)
-        .map(action => {
-          this.navi.nativeElement.popPage();
-        }),
-      this.actions$
-        .ofType(TodoAction.DELETE_FAILURE)
-        .map(action => {
-          ons.notification.toast({
-            message: 'Failed to delete',
-            timeout: 2000
-          });
-        })
-      )
-      .takeUntil(this.onDestroy)
-      .subscribe(() => {
-        this.store.dispatch(new SpinnerAction.Hide());
-      });
-  }
-
-  /**
-   * Finalize
-   */
-  ngOnDestroy() {
-    this.onDestroy.next();
   }
 
 }

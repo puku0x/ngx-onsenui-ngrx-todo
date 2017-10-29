@@ -1,6 +1,8 @@
 <ons-toolbar>
   <div class="left">
-    <ons-back-button></ons-back-button>
+    <ons-back-button>
+      <ons-if platform="ios other">Todos</ons-if>
+    </ons-back-button>
   </div>
   <div class="center">Detail</div>
   <div class="right">
@@ -21,7 +23,7 @@
   </ons-list>
   <ons-list-title>Content</ons-list-title>
   <ons-list>
-    <ons-list-item>{{todo.content}}</ons-list-item>
+    <ons-list-item [innerHTML]="todo.content | sanitize | newline"></ons-list-item>
   </ons-list>
   <ons-list-title>Created date</ons-list-title>
   <ons-list>
