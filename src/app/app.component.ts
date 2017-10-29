@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import * as ons from 'onsenui';
 
 import { Page1Component } from './pages/page1/page1.component';
 
@@ -8,12 +7,8 @@ import { Page1Component } from './pages/page1/page1.component';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   rootPage = Page1Component;
 
-  constructor() {}
-
-  ngOnInit() {
-    //ons.disableAutoStatusBarFill();
-  }
+  constructor() { }
 }
