@@ -19,7 +19,6 @@ addons:
       - google-chrome-stable
 
 before_install:
-  - npm install -D coveralls
   - npm install -g @angular/cli
   - npm install -g phonegap
   - npm install -g webpack
