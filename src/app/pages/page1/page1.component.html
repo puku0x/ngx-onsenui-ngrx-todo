@@ -6,7 +6,7 @@
     </ons-if>
   </div>
 </ons-toolbar>
-<div class="content">
+<div class="content" #content>
   <ons-pull-hook height="64px" threshold-height="-1" (changestate)="onChangeState($event)" (action)="onAction($event)">
     <ons-icon size="22px" class="pull-hook-spinner" [attr.icon]="state === 'action' ? 'fa-spinner' : 'fa-arrow-down'" [attr.spin]="state === 'action' ? true : null" [attr.rotate]="state === 'preaction' && 180"></ons-icon>
   </ons-pull-hook>

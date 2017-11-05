@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Actions } from '@ngrx/effects';
 import { OnsNavigator, Params } from 'ngx-onsenui';
+import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 import { race } from 'rxjs/observable/race';
-import { take } from 'rxjs/operators';
+import { take, takeUntil, tap } from 'rxjs/operators';
 
 import * as TodoAction from '../../store/actions/todo/todo.action';
 import * as fromTodo from '../../store/reducers/todo/todo.reducer';
@@ -17,9 +18,13 @@ import { Page3Component } from '../page3/page3.component';
   templateUrl: './page1.component.html',
   styleUrls: ['./page1.component.scss']
 })
-export class Page1Component implements OnInit {
+export class Page1Component implements OnInit, OnDestroy {
+  onDestroy = new Subject();
   state = 'initial';
   todos$: Observable<Todo[]>;
+
+  // Content
+  @ViewChild('content') private content: ElementRef;
 
   /**
    * Constructor
@@ -38,8 +43,24 @@ export class Page1Component implements OnInit {
    * Initialize
    */
   ngOnInit() {
+    // Load all todos
     this.todos$ = this.store.select(fromTodo.getTodos);
     this.load();
+
+    // Scroll bottom when succeeded to create a todo
+    this.actions$
+      .ofType(TodoAction.CREATE_SUCCESS)
+      .pipe(
+        takeUntil(this.onDestroy),
+        tap(() => this.scrollToBottom())
+      ).subscribe();
+  }
+
+  /**
+   * Finalize
+   */
+  ngOnDestroy() {
+    this.onDestroy.next();
   }
 
   /**
@@ -94,6 +115,15 @@ export class Page1Component implements OnInit {
       animation: 'lift'
     };
     this.navi.nativeElement.pushPage(Page3Component, params);
+  }
+
+  /**
+   * Scroll to bottom of page
+   */
+  scrollToBottom() {
+    setTimeout(() => {
+      this.content.nativeElement.scrollTop = this.content.nativeElement.scrollHeight;
+    });
   }
 
 }
