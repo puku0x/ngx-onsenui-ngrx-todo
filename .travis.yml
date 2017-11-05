@@ -24,7 +24,7 @@ before_install:
   - npm install -g webpack
 
 script:
-  - ng test --single-run --code-coverage
+  - ng test --browsers=ChromeHeadless --single-run --code-coverage
   - ng e2e
 
 after_success:
