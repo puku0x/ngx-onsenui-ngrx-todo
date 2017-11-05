@@ -49,7 +49,7 @@ export class Page2Component implements OnInit, OnDestroy {
     this.todo$ = this.store.select(fromTodo.getTodo);
     this.todo$
       .pipe(takeUntil(this.onDestroy))
-      .subscribe((todo: Todo[]) => this.todo = todo);
+      .subscribe(todo => this.todo = todo);
 
     // Delete success
     const deleteSuccess = this.actions$
