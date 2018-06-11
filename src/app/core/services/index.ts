@@ -1,1 +1,4 @@
-export * from './todo/todo.service';
+/**
+ * Services
+ */
+export * from './todo';

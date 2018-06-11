@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 /**
  * Interceptor
@@ -8,8 +8,8 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class RequestInterceptor implements HttpInterceptor {
 
-  private baseUrl = 'https://spring-boot-travis-heroku.herokuapp.com/api/v1';
-  // private baseUrl = 'http://localhost:8080/api/v1';
+  private baseUrl = 'https://api.puku0x.net/v1';
+  // baseUrl = 'http://localhost:8080/api/v1';
 
   /**
    * Constructor

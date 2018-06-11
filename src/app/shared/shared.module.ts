@@ -1,11 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import {
   NewlinePipe,
   SanitizePipe
 } from './pipes';
+
+// Modules
+const modules = [
+  CommonModule,
+  FormsModule,
+  ReactiveFormsModule
+];
 
 // Pipes
 const pipes = [
@@ -15,17 +22,15 @@ const pipes = [
 
 @NgModule({
   imports: [
-    CommonModule,
-    FormsModule
+    ...modules
   ],
   declarations: [
     ...pipes,
   ],
   providers: [],
   exports: [
+    ...modules,
     ...pipes,
-    CommonModule,
-    FormsModule
   ]
 })
 export class SharedModule { }

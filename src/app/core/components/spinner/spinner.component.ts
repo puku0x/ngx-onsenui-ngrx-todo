@@ -1,11 +1,10 @@
-import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
+import { Component, ViewChild, EventEmitter, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Subject } from 'rxjs/Subject';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import * as SpinnerAction from '../../../store/actions/spinner/spinner.action';
-import * as fromSpinner from '../../../store/reducers/spinner/spinner.reducer';
+import * as SpinnerAction from '../../actions';
+import * as fromSpinner from '../../reducers';
 
 @Component({
   selector: 'app-spinner',
@@ -13,8 +12,9 @@ import * as fromSpinner from '../../../store/reducers/spinner/spinner.reducer';
   styleUrls: ['./spinner.component.scss']
 })
 export class SpinnerComponent implements OnInit, OnDestroy {
+  private readonly onDestroy$ = new EventEmitter();
+
   showing$: Observable<boolean>;
-  onDestroy = new Subject();
   @ViewChild('modal') modal;
 
   /**
@@ -29,9 +29,9 @@ export class SpinnerComponent implements OnInit, OnDestroy {
    * Initialize
    */
   ngOnInit() {
-    this.showing$ = this.store.select(fromSpinner.getShowing);
+    this.showing$ = this.store.select(fromSpinner.getSpinnerShowing);
     this.showing$
-      .pipe(takeUntil(this.onDestroy))
+      .pipe(takeUntil(this.onDestroy$))
       .subscribe(showing => {
         if (showing === true) {
           this.modal.nativeElement.show();
@@ -45,7 +45,7 @@ export class SpinnerComponent implements OnInit, OnDestroy {
    * Finalize
    */
   ngOnDestroy() {
-    this.onDestroy.next();
+    this.onDestroy$.emit();
   }
 
 }

@@ -1,9 +1,14 @@
 import { NgModule, ModuleWithProviders, Optional, SkipSelf, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { EffectsModule } from '@ngrx/effects';
 
+import { environment } from '../../environments/environment';
 import { TodoService } from './services';
 import { RequestInterceptor } from './interceptors';
+import { reducers, metaReducers } from './reducers';
 import { SpinnerComponent } from './components';
 
 /**
@@ -11,7 +16,11 @@ import { SpinnerComponent } from './components';
  */
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    HttpClientModule,
+    StoreModule.forRoot(reducers, { metaReducers }),
+    StoreDevtoolsModule.instrument({ logOnly: environment.production }),
+    EffectsModule.forRoot([]),
   ],
   exports: [
     SpinnerComponent,

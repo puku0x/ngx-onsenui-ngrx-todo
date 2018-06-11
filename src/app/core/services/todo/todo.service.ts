@@ -1,18 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
-import { Page, Todo } from '../../../models';
+import { Todo } from '../../../models';
 
 /**
  * Service
  */
 @Injectable()
 export class TodoService {
-  /**
-   * Constructor
-   * @param http
-   */
+
   constructor(private http: HttpClient) { }
 
   /**
@@ -20,16 +17,16 @@ export class TodoService {
    * @param offset
    * @param limit
    */
-  findAll(offset?: number, limit?: number): Observable<Page<Todo>> {
+  findAll(offset?: number, limit?: number): Observable<Todo[]> {
     const url = `/todos`;
-    return this.http.get<Page<Todo>>(url);
+    return this.http.get<Todo[]>(url);
   }
 
   /**
    * Find
    * @param id
    */
-  find(id: number): Observable<Todo> {
+  find(id: string): Observable<Todo> {
     const url = `/todos/${id}`;
     return this.http.get<Todo>(url);
   }
@@ -54,11 +51,11 @@ export class TodoService {
 
   /**
    * Delete
-   * @param todo
+   * @param id
    */
-  delete(id: number): Observable<Todo>  {
+  delete(id: string): Observable<void>  {
     const url = `/todos/${id}`;
-    return this.http.delete<Todo>(url);
+    return this.http.delete<void>(url);
   }
 
 }

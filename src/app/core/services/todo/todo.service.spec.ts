@@ -1,9 +1,8 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
-import { CoreModule } from '../../core.module';
+import { Todo } from '../../../models';
 import { TodoService } from './todo.service';
-import { Page, Todo } from '../../../models';
 
 describe('TodoService', () => {
   let service: TodoService;
@@ -27,67 +26,61 @@ describe('TodoService', () => {
   });
 
   it('should successfully mock find all request', () => {
-    const response: Page<Todo> = {
-      content: [new Todo(1, 'test1'), new Todo(2, 'test2'), new Todo(3, 'test3'), ],
-      last: false,
-      first: true,
-      number: 0,
-      numberOfElements: 3,
-      size: 100,
-      sort: null,
-      totalElements: 3,
-      totalPages: 1
-    };
+    const response = [
+      new Todo('1', 'test1'),
+      new Todo('2', 'test2'),
+      new Todo('3', 'test3'),
+    ];
     service.findAll().subscribe(data => {
-      expect(data).toEqual(response);
+      expect(data).toBe(response);
     });
-    httpMock
-      .expectOne(`/todos`)
-      .flush(response);
+    const req = httpMock.expectOne(`/todos`);
+    expect(req.request.method).toEqual('GET');
+    req.flush(response);
     httpMock.verify();
   });
 
   it('should successfully mock find request', () => {
-    const todo: Todo = new Todo(1, 'test');
-    service.find(1).subscribe(data => {
-      expect(data).toEqual(todo);
+    const todo = new Todo('1', 'test');
+    service.find(todo.id).subscribe(data => {
+      expect(data).toBe(todo);
     });
-    httpMock
-      .expectOne(`/todos/1`)
-      .flush(todo);
+    const req = httpMock.expectOne(`/todos/1`);
+    expect(req.request.method).toEqual('GET');
+    req.flush(todo);
     httpMock.verify();
   });
 
   it('should successfully mock create request', () => {
-    const todo: Todo = new Todo(1, 'test');
+    const todo = new Todo('1', 'test');
     service.create(new Todo(null, 'test')).subscribe(data => {
       expect(data).toEqual(todo);
     });
-    httpMock
-      .expectOne(`/todos`)
-      .flush(todo);
+    const req = httpMock.expectOne(`/todos`);
+    expect(req.request.method).toEqual('POST');
+    req.flush(todo);
     httpMock.verify();
   });
 
   it('should successfully mock update request', () => {
-    const todo: Todo = new Todo(1, 'test');
-    const todo2: Todo = new Todo(todo.id, 'test2');
+    const todo = new Todo('1', 'test');
+    const todo2 = new Todo(todo.id, 'test2');
     service.update(todo2).subscribe(data => {
       expect(data).toEqual(todo2);
     });
-    httpMock
-      .expectOne(`/todos/1`)
-      .flush(todo2);
+    const req = httpMock.expectOne(`/todos/1`);
+    expect(req.request.method).toEqual('PUT');
+    req.flush(todo2);
     httpMock.verify();
   });
 
   it('should successfully mock delete request', () => {
-    const todo: Todo = new Todo(1, 'test');
+    const todo = new Todo('1', 'test');
     service.delete(todo.id).subscribe(data => {
       expect(data).toEqual(null);
     });
-    httpMock
-      .expectOne(`/todos/1`);
+    const req = httpMock.expectOne(`/todos/1`);
+    expect(req.request.method).toEqual('DELETE');
     httpMock.verify();
   });
 

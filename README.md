@@ -8,7 +8,7 @@
 |--|--|
 |![iphone6s](./screenshots/iphone6s.png)|![nexus5x](./screenshots/nexus5x.png)|
 
-A sample app using Onsen UI, Angular, ngrx and PhoneGap.
+A sample app using Onsen UI, Angular, NgRx and PhoneGap.
 
 Try it here: [https://puku0x.github.io/ngx-onsenui-ngrx-todo/](https://puku0x.github.io/ngx-onsenui-ngrx-todo/).
 
@@ -21,11 +21,11 @@ npm install
 npm start
 ```
 
-The app will run at [http://localhost:3000](http://localhost:3000).
+The app will run at [http://localhost:4200](http://localhost:4200).
 
 ## How to build it
 
-You can build it using PhoneGap.
+You can build it by using PhoneGap.
 
 - [Install Phonegap](http://docs.phonegap.com/getting-started/1-install-phonegap/cli/):
 
@@ -67,4 +67,3 @@ To debug a Redux app, please use [Redux DevTools extention](https://github.com/z
 [david-dm-image]:https://david-dm.org/puku0x/ngx-onsenui-ngrx-todo.svg
 [david-dm-dev-url]:https://david-dm.org/puku0x/ngx-onsenui-ngrx-todo?type=dev
 [david-dm-dev-image]:https://david-dm.org/puku0x/ngx-onsenui-ngrx-todo/dev-status.svg
-

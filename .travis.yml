@@ -1,9 +1,9 @@
-sudo: false
+sudo: required
 
 language: node_js
 
 node_js:
-  - node
+  - "8"
 
 dist: trusty
 
@@ -12,26 +12,20 @@ cache:
     - node_modules
 
 addons:
-  apt:
-    sources:
-      - google-chrome
-    packages:
-      - google-chrome-stable
+  chrome: stable
 
 before_install:
-  - npm install -g @angular/cli
-  - npm install -g phonegap
-  - npm install -g webpack
+  - npm install coveralls
 
 script:
-  - ng test --browsers=ChromeHeadless --single-run --code-coverage
-  - ng e2e
+  - npm run test
+  - npm run e2e
 
 after_success:
   - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
 
 before_deploy:
-  - npm run build:prod
+  - npm run build
 
 deploy:
   provider: pages
