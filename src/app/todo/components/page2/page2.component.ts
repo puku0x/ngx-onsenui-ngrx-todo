@@ -6,7 +6,7 @@ import * as ons from 'onsenui';
 import { Observable, merge } from 'rxjs';
 import { takeUntil, tap, filter } from 'rxjs/operators';
 
-import { ShowSpinner, HideSpinner } from '../../core/actions';
+import { ShowSpinner, HideSpinner } from '../../../core/actions';
 import {
   TodoActionTypes,
   LoadTodos,
@@ -14,9 +14,9 @@ import {
   CreateTodo,
   UpdateTodo,
   DeleteTodo
-} from '../actions';
-import * as fromTodo from '../reducers';
-import { Todo } from '../../models';
+} from '../../actions';
+import * as fromTodo from '../../reducers';
+import { Todo } from '../../../models';
 import { Page3Component } from '../page3/page3.component';
 
 @Component({

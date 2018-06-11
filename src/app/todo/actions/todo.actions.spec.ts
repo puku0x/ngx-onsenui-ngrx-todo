@@ -4,6 +4,9 @@ import {
   LoadTodos,
   LoadTodosSuccess,
   LoadTodosFail,
+  LoadTodo,
+  LoadTodoSuccess,
+  LoadTodoFail,
   CreateTodo,
   CreateTodoSuccess,
   CreateTodoFail,
@@ -22,6 +25,16 @@ describe('TodoActions', () => {
       payload: { offset: 0, limit: 100 }
     };
     const action = new LoadTodos(expectedAction.payload);
+    expect(action.type).toEqual(expectedAction.type);
+    expect(action.payload).toEqual(expectedAction.payload);
+  });
+
+  it('should create an action to load todo', () => {
+    const expectedAction = {
+      type: TodoActionTypes.LoadTodo,
+      payload: { id: '1' }
+    };
+    const action = new LoadTodo(expectedAction.payload);
     expect(action.type).toEqual(expectedAction.type);
     expect(action.payload).toEqual(expectedAction.payload);
   });

@@ -12,6 +12,9 @@ import {
   LoadTodos,
   LoadTodosSuccess,
   LoadTodosFail,
+  LoadTodo,
+  LoadTodoSuccess,
+  LoadTodoFail,
   CreateTodo,
   CreateTodoSuccess,
   CreateTodoFail,
@@ -65,7 +68,7 @@ describe('TodoEffects', () => {
       expect(effects.loadTodos$).toBeObservable(expected);
     });
 
-    it('should return LoadTodosF', () => {
+    it('should return LoadTodosFail', () => {
       const error = 'error';
       const action = new LoadTodos();
       const completion = new LoadTodosFail({ error });
@@ -76,6 +79,34 @@ describe('TodoEffects', () => {
       service.findAll = () => response;
 
       expect(effects.loadTodos$).toBeObservable(expected);
+    });
+  });
+
+  describe('loadTodo$', () => {
+    it('should return LoadTodoSuccess', () => {
+      const todo = new Todo('1', 'test1');
+      const action = new LoadTodo({ id: '1' });
+      const completion = new LoadTodoSuccess({ todo });
+
+      actions$ = hot('-a', { a: action });
+      const response = cold('-b', { b: todo });
+      const expected = cold('--c', { c: completion });
+      service.find = () => response;
+
+      expect(effects.loadTodo$).toBeObservable(expected);
+    });
+
+    it('should return LoadTodoFail', () => {
+      const error = 'error';
+      const action = new LoadTodo({ id: '1' });
+      const completion = new LoadTodoFail({ error });
+
+      actions$ = hot('-a', { a: action });
+      const response = cold('-#', {}, error);
+      const expected = cold('--c', { c: completion });
+      service.find = () => response;
+
+      expect(effects.loadTodo$).toBeObservable(expected);
     });
   });
 

@@ -6,9 +6,7 @@ import { OnsenModule } from 'ngx-onsenui';
 import { SharedModule } from '../shared';
 import * as fromTodo from './reducers';
 import { TodoEffects } from './effects';
-import { Page1Component } from './page1/page1.component';
-import { Page2Component } from './page2/page2.component';
-import { Page3Component } from './page3/page3.component';
+import { Page1Component, Page2Component, Page3Component } from './components';
 
 // Components
 const pages = [

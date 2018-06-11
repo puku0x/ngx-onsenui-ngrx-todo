@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Page1Component } from './todo/page1/page1.component';
+import { Page1Component } from './todo/components';
 
 @Component({
   selector: 'app-root',

@@ -23,9 +23,7 @@
   </ons-list>
   <ons-list-title>Content</ons-list-title>
   <ons-list>
-    <ons-list-item>
-      <div [innerHTML]="todo.text | sanitize | newline"></div>
-    </ons-list-item>
+    <ons-list-item [innerHTML]="todo.text | sanitize | newline"></ons-list-item>
   </ons-list>
   <ons-list-title>Created date</ons-list-title>
   <ons-list>

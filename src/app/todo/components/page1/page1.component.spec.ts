@@ -3,21 +3,21 @@ import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { Store } from '@ngrx/store';
 import { OnsenModule, OnsNavigator, Params } from 'ngx-onsenui';
 
-import { CoreModule } from '../../core';
-import { TodoModule } from '../todo.module';
+import { CoreModule } from '../../../core';
+import { TodoModule } from '../../todo.module';
 import {
   TodoActionTypes,
   LoadTodos,
   CreateTodo,
   UpdateTodo,
   DeleteTodo
-} from '../actions';
-import * as fromTodo from '../reducers';
-import { TodoService } from '../../core/services';
-import { Todo } from '../../models';
-import { Page3Component } from './page3.component';
-import { Page1Component } from '../page1/page1.component';
+} from '../../actions';
+import * as fromTodo from '../../reducers';
+import { TodoService } from '../../../core/services';
+import { Todo } from '../../../models';
+import { Page1Component } from './page1.component';
 import { Page2Component } from '../page2/page2.component';
+import { Page3Component } from '../page3/page3.component';
 
 /**
  * Mock for OnsNavigator
@@ -29,9 +29,6 @@ class OnsNavigatorMock {
     pushPage: (component, params) => {
       this.component = component;
       this.params = params;
-    },
-    popPage: () => {
-      this.component = Page2Component;
     }
   };
 }
@@ -42,11 +39,10 @@ class OnsNavigatorMock {
 class ParamsMock {
 }
 
-describe('Page3Component', () => {
-  let component: Page3Component;
-  let fixture: ComponentFixture<Page3Component>;
+describe('Page1Component', () => {
+  let component: Page1Component;
+  let fixture: ComponentFixture<Page1Component>;
   let store: Store<fromTodo.State>;
-  // let actions: Observable<any>;
   let navi: OnsNavigatorMock;
 
   beforeEach(async(() => {
@@ -70,36 +66,28 @@ describe('Page3Component', () => {
     navi = TestBed.get(OnsNavigator);
     store = TestBed.get(Store);
     spyOn(store, 'dispatch').and.callThrough();
-    fixture = TestBed.createComponent(Page3Component);
+    spyOn(store, 'select').and.callThrough();
+    fixture = TestBed.createComponent(Page1Component);
     component = fixture.debugElement.componentInstance;
   }));
 
-  it('should create the page3', async(() => {
+  it('should create the page1', async(() => {
     expect(component).toBeTruthy();
   }));
 
-  it('should dispatch an action to create data', () => {
-    const todo = new Todo(null, 'test');
-    const action = new CreateTodo({ todo });
-    component.create(todo);
+  it('should dispatch an action to load data', () => {
+    const action = new LoadTodos();
+    component.load();
     expect(store.dispatch).toHaveBeenCalledWith(action);
   });
 
-  it('should dispatch an action to update data', () => {
-    const todo = new Todo('1', 'test');
-    const action = new UpdateTodo({
-      todo: {
-        id: todo.id,
-        changes: { ...todo }
-      }
-    });
-    component.update(todo);
-    expect(store.dispatch).toHaveBeenCalledWith(action);
-  });
-
-  it('should go to page2, when cancel() called', async(() => {
-    component.cancel();
+  it('should go to page2, when detail() called', async(() => {
+    component.detail(new Todo('1', 'test'));
     expect(navi.component).toEqual(Page2Component);
   }));
 
+  it('should go to page3, when add() called', async(() => {
+    component.add();
+    expect(navi.component).toEqual(Page3Component);
+  }));
 });

@@ -8,6 +8,9 @@ import {
 
 import * as fromTodo from './todo.reducer';
 
+/**
+ * Feature state
+ */
 export interface State {
   todos: fromTodo.State;
 }

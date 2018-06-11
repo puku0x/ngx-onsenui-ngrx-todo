@@ -1,4 +1,5 @@
 import { Action, createSelector, createFeatureSelector } from '@ngrx/store';
+
 import { SpinnerActions, SpinnerActionTypes } from '../actions';
 
 /**

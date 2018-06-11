@@ -5,6 +5,9 @@ import {
   LoadTodos,
   LoadTodosSuccess,
   LoadTodosFail,
+  LoadTodo,
+  LoadTodoSuccess,
+  LoadTodoFail,
   CreateTodo,
   CreateTodoSuccess,
   CreateTodoFail,
@@ -82,6 +85,73 @@ describe('Todo Reducer', () => {
         loading: false
       };
       const action = new LoadTodosFail({ error: 'error' });
+      expect(reducer(initial, action)).toEqual(expected);
+    });
+
+    it('should handle LoadTodo', () => {
+      const todos = [
+        new Todo('1', 'todo1'),
+        new Todo('2', 'todo2'),
+        new Todo('3', 'todo3')
+      ];
+      const initial: State = {
+        loading: false,
+        todo: null,
+        ids: ['1', '2', '3'],
+        entities: {
+          '1': todos[0],
+          '2': todos[1],
+          '3': todos[2]
+        }
+      };
+      const expected: State = {
+        ...initial,
+        loading: true,
+        todo: todos[0]
+      };
+      const action = new LoadTodo({ id: '1' });
+      expect(reducer(initial, action)).toEqual(expected);
+    });
+
+    it('should handle LoadTodoSuccess', () => {
+      const todos = [
+        new Todo('1', 'todo1'),
+        new Todo('2', 'todo2'),
+        new Todo('3', 'todo3')
+      ];
+      const todo = new Todo('1', 'todo1', true, 1000, 2000);
+
+      const initial: State = {
+        loading: true,
+        todo: todos[0],
+        ids: ['1', '2', '3'],
+        entities: {
+          '1': todos[0],
+          '2': todos[1],
+          '3': todos[2]
+        }
+      };
+      const expected: State = {
+        ...initial,
+        loading: false,
+        todo: todo
+      };
+      const action = new LoadTodoSuccess({ todo });
+      expect(reducer(initial, action)).toEqual(expected);
+    });
+
+    it('should handle LoadTodoFail', () => {
+      const initial: State = {
+        loading: true,
+        todo: null,
+        ids: [],
+        entities: {}
+      };
+      const expected: State = {
+        ...initial,
+        loading: false
+      };
+      const action = new LoadTodoFail({ error: 'error' });
       expect(reducer(initial, action)).toEqual(expected);
     });
 
@@ -179,6 +249,7 @@ describe('Todo Reducer', () => {
       const expected: State = {
         ...initial,
         loading: false,
+        todo: new Todo('1', 'todo2', false, 1000, 2000),
         entities: {
           '1': {
             id: '1',

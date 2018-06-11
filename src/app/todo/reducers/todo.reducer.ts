@@ -67,7 +67,7 @@ export function reducer(
       return { ...state, loading: true };
     }
     case TodoActionTypes.UpdateTodoSuccess: {
-      return adapter.updateOne(action.payload.todo, { ...state, loading: false });
+      return adapter.updateOne(action.payload.todo, { ...state, loading: false, todo: action.payload.todo.changes });
     }
     case TodoActionTypes.UpdateTodoFail: {
       return { ...state, loading: false };
